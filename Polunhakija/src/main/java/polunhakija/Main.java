@@ -1,5 +1,6 @@
 package polunhakija;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -26,7 +27,7 @@ public class Main {
         
         Queue<Node> openNodes = new PriorityQueue(width_x * height_y, adjentComp);
         Node start = new Node(29, 10);
-        Node goal = new Node(38, 30);
+        Node goal = new Node(47, 84);
         
         start.distance = 0;
         
@@ -34,9 +35,9 @@ public class Main {
         
         while (!openNodes.isEmpty()) {
             Node current = openNodes.remove();
-            System.out.println("x: " + current.x);
-            System.out.println("y: " + current.y);
-            System.out.println("------");
+            //System.out.println("x: " + current.x);
+            //System.out.println("y: " + current.y);
+            //System.out.println("------");
             
             if (current.x == goal.x && current.y == goal.y) {
                 System.out.println("GOAALLL");
@@ -95,6 +96,13 @@ public class Main {
             current.visited = true;      
         }
         
+        ArrayList<Node> path = new ArrayList<>();
+        Node node = map[goal.x][goal.y];
+        while (node.parent != null) {
+            map[node.x][node.y].cost = 4;
+            node = node.parent;
+        }
+
         
         
         
@@ -106,13 +114,7 @@ public class Main {
         
         for (int y=0; y<map[0].length; y++) {
             for (int x=0; x<map.length; x++) {
-                int dis = map[x][y].distance;
-                if (dis > 500) {
-                    System.out.print("&");
-                } else {
-                    System.out.print(1);
-                }
-                
+                System.out.print(map[x][y].cost);            
             }
             System.out.println();
         }
