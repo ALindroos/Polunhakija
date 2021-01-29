@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class MapLoader {
     
-    public int[][] loadMap() {
+    public Node[][] loadMap() {
        
         String regex = "[^\\d]+";
         try (Scanner scanner = new Scanner(Paths.get("AR0015SR.map"))) {                        
@@ -16,23 +16,27 @@ public class MapLoader {
             int height_y = Integer.parseInt(allLines.get(1).split(regex)[1]);
             int width_x = Integer.parseInt(allLines.get(2).split(regex)[1]);            
             
-            int[][] map = new int[width_x][height_y];                     
             
-            int i = 0;
+            int[][] map = new int[width_x][height_y];    
+            Node[][] nodeMap = new Node[width_x][height_y];
+            
+            int y = 0;
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine(); 
-                if (i > 4) {
-                    for (int x = 0; x < width_x; x++) {                       
+                if (y > 3) {
+                    for (int x = 0; x < width_x; x++) { 
+                        nodeMap[x][y-4] = new Node(x, y-4);
                         if (line.charAt(x) == '@' ) {
-                            map[x][i-4] = 0;
+                            nodeMap[x][y-4].wall = true;
                         } else {
-                            map[x][i-4] = 1;
+                            nodeMap[x][y-4].cost = 1;
                         }
                     }
                 }                
-                i++;
+                y++;
             }   
-            return map;
+            
+            return nodeMap;
             
         } catch (Exception e) {
             System.out.println("Failure loading map data");
