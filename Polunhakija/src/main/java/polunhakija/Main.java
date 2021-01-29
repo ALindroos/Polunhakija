@@ -48,8 +48,7 @@ public class Main {
             Node tempNode;
             
             //check neighbours
-            //up
-            
+            //up           
             if (current.y > 0) {
                 tempNode = map[current.x][current.y -1];
                 if (!tempNode.visited && !tempNode.wall && 
@@ -59,8 +58,7 @@ public class Main {
                     openNodes.add(tempNode);  
                 }
             }
-            
-            
+ 
             //down
             if (current.y < height_y) {
                 tempNode = map[current.x][current.y +1];
@@ -96,21 +94,13 @@ public class Main {
             current.visited = true;      
         }
         
+        //extract 'shortest path from start to goal
         ArrayList<Node> path = new ArrayList<>();
         Node node = map[goal.x][goal.y];
         while (node.parent != null) {
             map[node.x][node.y].cost = 4;
             node = node.parent;
         }
-
-        
-        
-        
-        
-        
-        
-        
-        
         
         for (int y=0; y<map[0].length; y++) {
             for (int x=0; x<map.length; x++) {
