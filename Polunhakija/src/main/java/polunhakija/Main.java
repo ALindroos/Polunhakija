@@ -9,6 +9,11 @@ import java.util.Queue;
 public class Main {
     
     public static void main(String[] args) {
+        
+        BinaryHeap heap = new BinaryHeap(100);
+
+             
+        /*
         MapLoader mapLoader = new MapLoader();
         Node[][] map = mapLoader.loadMap();
         
@@ -24,8 +29,8 @@ public class Main {
                 return -1;
             }
         };
+        Queue<Node> openNodes = new PriorityQueue(width_x * height_y, adjentComp);      
         
-        Queue<Node> openNodes = new PriorityQueue(width_x * height_y, adjentComp);
         Node start = new Node(29, 10);
         Node goal = new Node(47, 84);
         
@@ -95,11 +100,13 @@ public class Main {
         }
         
         //extract 'shortest path from start to goal
+        int pathL = 0;
         ArrayList<Node> path = new ArrayList<>();
         Node node = map[goal.x][goal.y];
         while (node.parent != null) {
             map[node.x][node.y].cost = 4;
             node = node.parent;
+            pathL++;
         }
         
         for (int y=0; y<map[0].length; y++) {
@@ -108,8 +115,9 @@ public class Main {
             }
             System.out.println();
         }
+        System.out.println("Path: " + pathL );
         
-        
-        
+        */
+
     }   
 }
