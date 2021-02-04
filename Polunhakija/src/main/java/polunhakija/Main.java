@@ -10,33 +10,21 @@ public class Main {
     
     public static void main(String[] args) {
         
-        BinaryHeap heap = new BinaryHeap(100);
-
-             
-        /*
         MapLoader mapLoader = new MapLoader();
         Node[][] map = mapLoader.loadMap();
         
         int width_x = map.length;
         int height_y = map[0].length;
-        int exDistance = 1;
+        int exDistance = 1;       
         
-        
-        Comparator<Node> adjentComp = (left, right) -> {
-            if (left.distance > right.distance) {
-                return 1;
-            } else {
-                return -1;
-            }
-        };
-        Queue<Node> openNodes = new PriorityQueue(width_x * height_y, adjentComp);      
+        BinaryHeap openNodes = new BinaryHeap(width_x * height_y);
         
         Node start = new Node(29, 10);
         Node goal = new Node(47, 84);
         
         start.distance = 0;
         
-        openNodes.add(start);
+        openNodes.insert(start);
         
         while (!openNodes.isEmpty()) {
             Node current = openNodes.remove();
@@ -60,7 +48,7 @@ public class Main {
                         tempNode.distance > current.distance + exDistance) {
                     tempNode.distance = current.distance + exDistance;
                     tempNode.parent = current;
-                    openNodes.add(tempNode);  
+                    openNodes.insert(tempNode);  
                 }
             }
  
@@ -71,7 +59,7 @@ public class Main {
                         tempNode.distance > current.distance + exDistance) {
                     tempNode.distance = current.distance + exDistance;
                     tempNode.parent = current;
-                    openNodes.add(tempNode);  
+                    openNodes.insert(tempNode);  
                 }
             }
             
@@ -82,7 +70,7 @@ public class Main {
                         tempNode.distance > current.distance + exDistance) {
                     tempNode.distance = current.distance + exDistance;
                     tempNode.parent = current;
-                    openNodes.add(tempNode);  
+                    openNodes.insert(tempNode);  
                 }
             }
             
@@ -93,7 +81,7 @@ public class Main {
                         tempNode.distance > current.distance + exDistance) {
                     tempNode.distance = current.distance + exDistance;
                     tempNode.parent = current;
-                    openNodes.add(tempNode);  
+                    openNodes.insert(tempNode);  
                 }
             }
             current.visited = true;      
@@ -117,7 +105,7 @@ public class Main {
         }
         System.out.println("Path: " + pathL );
         
-        */
+        
 
     }   
 }

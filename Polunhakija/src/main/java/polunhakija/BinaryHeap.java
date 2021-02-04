@@ -38,20 +38,21 @@ public class BinaryHeap {
         
         if (right <= heapSize) {
             
-            if(heap[i].distance > heap[left].distance 
-                    || heap[i].distance > heap[right].distance) {
-                
-                if(left < right) {
-                    swap(i, left);
-                    heapify(left);
-                } 
-                
-                else {
-                    swap(i, right);
-                    heapify(right);
-                }                
+            if (heap[left].distance < heap[right].distance) {
+                min = left;
+            } else {
+                min = right;
             }
+            
+            if (heap[i].distance > heap[min].distance) {
+                swap(i, min);
+                heapify(min);
+            }
+            
+        } else if (left == heapSize && heap[i].distance > heap[left].distance) {
+            swap(i,left);
         }
+          
     }
     
     public Node heapMin() {
@@ -62,6 +63,10 @@ public class BinaryHeap {
         return (heapSize == 0);
     }
     
+    public int size() {
+        return heapSize;
+    }
+
     public void insert(Node node) {
         heapSize = heapSize + 1;
         int i = heapSize;
@@ -84,16 +89,10 @@ public class BinaryHeap {
     
     public void testPrint() {
         System.out.println("heapSize: " + heapSize);
-        for(int i = 0; i < heapSize; i++) {
-            System.out.println("Parent: " + heapMin()
-                    + " LEFT CHILD: " + heap[left(i)]
-                    + " RIGHT Child: " + heap[right(i)]
-            );
+        for (int i = 1; i <= heapSize; i++) {
+            System.out.println(heap[i].distance);
         }
         System.out.println("---");
-        for (int i = 0; i < heapSize + 4; i++) {
-            System.out.println(heap[i]);
-        }
     }
     
 }
