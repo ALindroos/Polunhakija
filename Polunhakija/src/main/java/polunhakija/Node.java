@@ -9,6 +9,7 @@ public class Node {
     int distance;
     Node parent;
     boolean visited;
+    boolean path;
     boolean wall;
     int cost;
     

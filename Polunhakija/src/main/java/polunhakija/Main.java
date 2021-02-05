@@ -11,99 +11,14 @@ public class Main {
     public static void main(String[] args) {
         
         MapLoader mapLoader = new MapLoader();
-        Node[][] map = mapLoader.loadMap();
-        
-        int width_x = map.length;
-        int height_y = map[0].length;
-        int exDistance = 1;       
-        
-        BinaryHeap openNodes = new BinaryHeap(width_x * height_y);
-        
-        Node start = new Node(29, 10);
-        Node goal = new Node(47, 84);
-        
-        start.distance = 0;
-        
-        openNodes.insert(start);
-        
-        while (!openNodes.isEmpty()) {
-            Node current = openNodes.remove();
-            //System.out.println("x: " + current.x);
-            //System.out.println("y: " + current.y);
-            //System.out.println("------");
-            
-            if (current.x == goal.x && current.y == goal.y) {
-                System.out.println("GOAALLL");
-                break;
-            }
-            
-            
-            Node tempNode;
-            
-            //check neighbours
-            //up           
-            if (current.y > 0) {
-                tempNode = map[current.x][current.y -1];
-                if (!tempNode.visited && !tempNode.wall && 
-                        tempNode.distance > current.distance + exDistance) {
-                    tempNode.distance = current.distance + exDistance;
-                    tempNode.parent = current;
-                    openNodes.insert(tempNode);  
-                }
-            }
+        Node[][] map = mapLoader.loadMap();   
  
-            //down
-            if (current.y < height_y) {
-                tempNode = map[current.x][current.y +1];
-                if (!tempNode.visited && !tempNode.wall && 
-                        tempNode.distance > current.distance + exDistance) {
-                    tempNode.distance = current.distance + exDistance;
-                    tempNode.parent = current;
-                    openNodes.insert(tempNode);  
-                }
-            }
-            
-            //right
-            if (current.y < width_x) {
-                tempNode = map[current.x + 1][current.y];
-                if (!tempNode.visited && !tempNode.wall &&
-                        tempNode.distance > current.distance + exDistance) {
-                    tempNode.distance = current.distance + exDistance;
-                    tempNode.parent = current;
-                    openNodes.insert(tempNode);  
-                }
-            }
-            
-            //left
-            if (current.y > 0) {
-                tempNode = map[current.x - 1][current.y];
-                if (!tempNode.visited && !tempNode.wall &&
-                        tempNode.distance > current.distance + exDistance) {
-                    tempNode.distance = current.distance + exDistance;
-                    tempNode.parent = current;
-                    openNodes.insert(tempNode);  
-                }
-            }
-            current.visited = true;      
-        }
+        Node start = new Node(29, 10);
+        Node goal = new Node(45, 80);
+                
         
-        //extract 'shortest path from start to goal
-        int pathL = 0;
-        ArrayList<Node> path = new ArrayList<>();
-        Node node = map[goal.x][goal.y];
-        while (node.parent != null) {
-            map[node.x][node.y].cost = 4;
-            node = node.parent;
-            pathL++;
-        }
-        
-        for (int y=0; y<map[0].length; y++) {
-            for (int x=0; x<map.length; x++) {
-                System.out.print(map[x][y].cost);            
-            }
-            System.out.println();
-        }
-        System.out.println("Path: " + pathL );
+        Dijkstra dijkstra = new Dijkstra();
+        dijkstra.findPath(map, start, goal);
         
         
 
