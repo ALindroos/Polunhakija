@@ -30,6 +30,10 @@ public class Dijkstra {
         System.out.println("Path: " + pathL );       
     }
     
+    private void paint() {
+        
+    }
+    
     public int getPathL() {
         return pathL;
     }
@@ -41,6 +45,7 @@ public class Dijkstra {
         int height_y = map[0].length;
         int exDistance = 1;
         BinaryHeap openNodes = new BinaryHeap(width_x * height_y);
+       
         
         start.distance = 0;
         openNodes.insert(start);
@@ -99,7 +104,8 @@ public class Dijkstra {
                 }
             }
 
-            current.visited = true;      
+            current.visited = true;   
+
         }
         
         pathL = 0;
@@ -114,6 +120,7 @@ public class Dijkstra {
         printState(map);
         
         return map;
+        
     }
     
     
