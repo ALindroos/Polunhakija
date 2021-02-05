@@ -5,7 +5,7 @@ Tarkoitus on luoda reitinhakusovellus 2D-kartoille, jolla etsitään etsitään 
 ## Algoritmit
 Tarkoituksena on toteuttaa reitinhaku ainakin Djikstran- ja JPS (Jump point search) algoritmien avulla.
 
-Molemmat algoritmit, Dijkstra ja JPS toimivat lähes lineaarisessa ajassa, sillä pahimman tapauksen aikavaativuus on molemmissa sama O(n log(n)), mutta JPS voi olla keskimäärin nopeampi, sille se voi hyppiä useiden peräkkäisten solmujen ohi. Tämän tehokkuus korustuu erityisesti verkoissa joissa etäisyydet ovat tasaisia, kuten käsittelemissäni kartoissa. Tilavaatimus molemmilla luokkaa luokkaa O(n). 
+Molemmat algoritmit, Dijkstra ja JPS toimivat lähes lineaarisessa ajassa, sillä pahimman tapauksen aikavaativuus on molemmissa sama O(|E|+|V| log|V|) ( missä V solmujen joukko, E kaarien), mutta JPS voi olla keskimäärin nopeampi, sille se voi hyppiä useiden peräkkäisten solmujen ohi. Tämän tehokkuus korustuu erityisesti verkoissa joissa etäisyydet ovat tasaisia, kuten käsittelemissäni kartoissa. Tilavaatimus molemmilla luokkaa luokkaa O(n). 
 
 ## Tietorakenteet
 Jotta reitinhakeminen olisi tehokasta, verkon solmujen läpikäyntiä varten tulee toteuttaa Binaarikeko. Lisäksi kartat ja saadut tulokset voidaan esittää esimerkiksi kaksiulotteisessa taulukossa.
