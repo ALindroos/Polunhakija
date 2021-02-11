@@ -12,6 +12,7 @@ public class Node {
     boolean path;
     boolean wall;
     int cost;
+    boolean jmp;
     
     public Node(int x, int y) {
         this.x = x;

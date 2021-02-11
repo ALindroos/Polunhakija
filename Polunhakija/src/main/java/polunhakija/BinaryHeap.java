@@ -68,6 +68,10 @@ public class BinaryHeap {
     }
 
     public void insert(Node node) {
+        if (node == null) {
+           return;
+        }
+        
         heapSize = heapSize + 1;
         int i = heapSize;
         
@@ -79,6 +83,9 @@ public class BinaryHeap {
     }
     
     public Node remove(){
+        if (size() == 0) {
+            return null;
+        }
         Node removed = heap[1];
         heap[1] = heap[heapSize];
         heapSize = heapSize - 1;

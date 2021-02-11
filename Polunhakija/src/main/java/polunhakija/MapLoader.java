@@ -11,8 +11,8 @@ public class MapLoader {
     public Node[][] loadMap() {
        
         String regex = "[^\\d]+";
-        try (Scanner scanner = new Scanner(Paths.get("AR0015SR.map"))) {                        
-            List<String> allLines = Files.readAllLines(Paths.get("AR0015SR.map"));
+        try (Scanner scanner = new Scanner(Paths.get("test.map"))) {                        
+            List<String> allLines = Files.readAllLines(Paths.get("test.map"));
             int height_y = Integer.parseInt(allLines.get(1).split(regex)[1]);
             int width_x = Integer.parseInt(allLines.get(2).split(regex)[1]);            
             

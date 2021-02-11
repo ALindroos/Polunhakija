@@ -29,11 +29,7 @@ public class Dijkstra {
         }
         System.out.println("Path: " + pathL );       
     }
-    
-    private void paint() {
         
-    }
-    
     public int getPathL() {
         return pathL;
     }

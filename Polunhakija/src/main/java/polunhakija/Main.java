@@ -10,10 +10,13 @@ public class Main {
         MapLoader mapLoader = new MapLoader();
         Node[][] map = mapLoader.loadMap();   
  
-        Node start = new Node(29, 10);
-        Node goal = new Node(45, 80);
+        Node start = new Node(2, 6);
+        Node goal = new Node(8, 4);
+        //Dijkstra dijkstra = new Dijkstra();
+        //dijkstra.findPath(map, start, goal);
         
-        Dijkstra dijkstra = new Dijkstra();
-        dijkstra.findPath(map, start, goal);
+        JPS jps = new JPS();
+        jps.findPath(map, start, goal);
+        
     }   
 }
