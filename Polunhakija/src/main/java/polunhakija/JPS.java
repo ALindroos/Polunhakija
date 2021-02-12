@@ -47,8 +47,10 @@ public class JPS {
     
     
     private Node scanPathHor(Node node, int xDir) {
+        
+        
  
-        if (node.wall) {
+        if (node.wall || node.visited) {
             return null;
         }
     
@@ -68,8 +70,8 @@ public class JPS {
             return node;
         }
         
-        if ( (map[node.x][node.y + 1].wall && !map[node.x - xDir][node.y + 1].wall) ||
-                (map[node.x][node.y - 1].wall && !map[node.x - xDir][node.y - 1].wall) ) {
+        if ( (map[node.x][node.y + 1].wall && !map[node.x + xDir][node.y + 1].wall) ||
+                (map[node.x][node.y - 1].wall && !map[node.x + xDir][node.y - 1].wall) ) {
             return node;
         }
         
@@ -79,14 +81,14 @@ public class JPS {
     private Node scanPathVer(Node node, int yDir) {
         
         
-        if (node.wall) {
+        
+        if (node.wall || node.visited) {
             return null;
         }
         
         if (node.x == goal.x && node.y == goal.y) {
             return node;
         }
-        
         node.visited = true;
 
         if (map[node.x][node.y + yDir].wall || 
@@ -98,8 +100,8 @@ public class JPS {
             return node;
         }
         
-        if ( (map[node.x + 1][node.y].wall && !map[node.x + 1][node.y - yDir].wall) ||
-                (map[node.x - 1][node.y].wall && !map[node.x - 1][node.y- yDir].wall) ) {
+        if ( (map[node.x + 1][node.y].wall && !map[node.x + 1][node.y + yDir].wall) ||
+                (map[node.x - 1][node.y].wall && !map[node.x - 1][node.y + yDir].wall) ) {
             return node;
         }
         return scanPathVer(map[node.x][node.y + yDir], yDir);
@@ -107,7 +109,6 @@ public class JPS {
     
     private Node examineNode(Node node) {
         
-        Node tempNode;
         
         if (node.x == goal.x && node.y == goal.y) {
             return node;
@@ -188,7 +189,7 @@ public class JPS {
             Node current = openNodes.remove();
             Node tempNode = examineNode(current);
             
-            System.out.println(current.x + ":" + current.y);
+            //System.out.println(current.x + ":" + current.y);
             
             if (current.x == goal.x && current.y == goal.y) {
                 System.out.println("GOAL");

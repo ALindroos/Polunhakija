@@ -8,8 +8,8 @@ public class Main {
         MapLoader mapLoader = new MapLoader();
         Node[][] map = mapLoader.loadMap();   
  
-        Node start = new Node(2, 6);
-        Node goal = new Node(9, 6);
+        Node start = new Node(40, 30);
+        Node goal = new Node(45, 80);
         //Dijkstra dijkstra = new Dijkstra();
         //dijkstra.findPath(map, start, goal);
         
