@@ -6,7 +6,7 @@ public class Node {
     
     int x;
     int y;
-    int distance;
+    double distance;
     Node parent;
     boolean visited;
     boolean path;

@@ -1,7 +1,5 @@
 package polunhakija;
 
-import javax.swing.JFrame;
-
 
 public class Main {
     
@@ -11,7 +9,7 @@ public class Main {
         Node[][] map = mapLoader.loadMap();   
  
         Node start = new Node(2, 6);
-        Node goal = new Node(8, 4);
+        Node goal = new Node(9, 6);
         //Dijkstra dijkstra = new Dijkstra();
         //dijkstra.findPath(map, start, goal);
         
