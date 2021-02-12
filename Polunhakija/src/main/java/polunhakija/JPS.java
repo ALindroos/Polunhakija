@@ -114,6 +114,7 @@ public class JPS {
             return node;
         }
         
+        Node tempNode;
         node.visited = true;
         
         Node xPos = scanPathHor(map[node.x + 1][node.y], 1);
@@ -122,46 +123,62 @@ public class JPS {
         Node yNeg = scanPathVer(map[node.x][node.y - 1], -1);
         
         
+        //diag x,y
         if (!map[node.x + 1][node.y + 1].wall &&
                 !map[node.x + 1][node.y + 1].visited) {
-            examineNode(map[node.x + 1][node.y + 1]);
+            tempNode = map[node.x + 1][node.y + 1];
+            tempNode.parent = node;
+            examineNode(tempNode);
         }
         
+        //diag x, -y
         if (!map[node.x + 1][node.y - 1].wall &&
                 !map[node.x + 1][node.y - 1].visited) {
-            examineNode(map[node.x + 1][node.y - 1]);
+            tempNode = map[node.x + 1][node.y - 1];
+            tempNode.parent = node;
+            examineNode(tempNode);
         }
         
+        //diag -x,y
         if (!map[node.x - 1][node.y + 1].wall &&
                 !map[node.x - 1][node.y + 1].visited) {
-            examineNode(map[node.x - 1][node.y + 1]);
+            tempNode = map[node.x - 1][node.y + 1];
+            tempNode.parent = node;
+            examineNode(tempNode);
         }
         
+        //diag -x,-y
         if (!map[node.x - 1][node.y - 1].wall &&
                 !map[node.x - 1][node.y - 1].visited) {
-            examineNode(map[node.x - 1][node.y - 1]);
+            tempNode = map[node.x - 1][node.y - 1];
+            tempNode.parent = node;
+            examineNode(tempNode);
         }
         
 
         if (xPos != null) {
             node.jmp = true;
             xPos.jmp = true;
+            xPos.parent = node;
             openNodes.insert(xPos);
             
         }
         if (xNeg != null) {
             node.jmp = true;
             xNeg.jmp = true;
+            xNeg.parent = node;
             openNodes.insert(xNeg);
         }
         if (yPos != null) {
             node.jmp = true;
             yPos.jmp = true;
+            yPos.parent = node;
             openNodes.insert(yPos);
         }
         if (yNeg != null) {
             node.jmp = true;
             yNeg.jmp = true;
+            yNeg.parent = node;
             openNodes.insert(yNeg);
         }
 
@@ -189,7 +206,7 @@ public class JPS {
             Node current = openNodes.remove();
             Node tempNode = examineNode(current);
             
-            //System.out.println(current.x + ":" + current.y);
+            System.out.println(current.x + ":" + current.y);
             
             if (current.x == goal.x && current.y == goal.y) {
                 System.out.println("GOAL");
