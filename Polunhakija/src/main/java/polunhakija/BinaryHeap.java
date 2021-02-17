@@ -1,12 +1,21 @@
 
 package polunhakija;
 
+/**
+ * custom implementaion of minimum binary heap for Nodes
+ * uses node distance as comparison factor
+ *
+ */
 public class BinaryHeap {
     
     private Node[] heap;
     private int heapSize;
     
-    
+    /**
+     * Initialise heap
+     * @param size for the worst possible scenario that all nodes need to
+     * be examined the heap size should be set to the size of the grid
+     */
     public BinaryHeap(int size) {
         this.heapSize = 0;
         heap = new Node[size];
@@ -16,10 +25,12 @@ public class BinaryHeap {
         return (i / 2);
     }
     
+
     private int left(int i) {
         return (i * 2);
     }
     
+
     private int right(int i) {
         return (i * 2) + 1;
     }
@@ -30,7 +41,6 @@ public class BinaryHeap {
         heap[bpos] = temp;
     }
    
-    
     private void heapify(int i) {
         int left = left(i);
         int right = right(i);

@@ -5,9 +5,20 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
-
+/**
+ * 
+ * class for loading map files and converting them to grid representation of a graph
+ */
 public class MapLoader {
     
+    
+    /**
+     * 
+     *
+     * @param mapName filename for map to be loaded
+     * loadable maps should be put to src folder
+     * @return returns a 2D array of Nodes witch is used the graph
+     */
     public Node[][] loadMap(String mapName) {
        
         if (mapName.isEmpty()) {

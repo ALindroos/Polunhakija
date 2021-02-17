@@ -31,6 +31,7 @@
 hs_err_pid*
 /Polunhakija/.nb-gradle/
 /Polunhakija/build/
+/Polunhakija/.nb-gradle-properties
 
 #map files
 *.map

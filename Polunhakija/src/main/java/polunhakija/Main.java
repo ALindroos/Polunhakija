@@ -17,13 +17,13 @@ public class Main {
         Node start = new Node(40, 30);
         Node goal = new Node(45, 80);
         
-        Dijkstra dijkstra = new Dijkstra();
-        double d = dijkstra.findPath(map1, start, goal);
+        //Dijkstra dijkstra = new Dijkstra();
+        //double d = dijkstra.findPath(map1, start, goal);
         
         JPS jps = new JPS();
         double j = jps.findPath(map2, start, goal);
         
-        dijkstra.printState();
+        //dijkstra.printState();
         jps.printState();
         
         

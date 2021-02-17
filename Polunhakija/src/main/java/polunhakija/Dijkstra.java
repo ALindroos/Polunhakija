@@ -1,12 +1,18 @@
 
 package polunhakija;
 
-
+/**
+ * implementaion of Dijkstra's algorithm with 8-way moves
+ * 
+ */
 public class Dijkstra {
     
     private double pathL;
     private Node[][] map;
     
+    /**
+     * prints ASCII representation of the graph
+     */
     public void printState() {
         for (int y=0; y<map[0].length; y++) {
             for (int x=0; x<map.length; x++) {
@@ -35,6 +41,15 @@ public class Dijkstra {
         return pathL;
     }
     
+    
+    /**
+     * examine neighbour of current node in given direction and return it if it needs
+     * to be examined later
+     * @param current currently examined node, parent of its neighbours
+     * @param xDir offset in x-coordinates, i.e +1 is right
+     * @param yDir offset in y-coordinates
+     * @return Node if it follows requirements, else null
+     */
     private Node checkNeighbour(Node current, int xDir, int yDir) {
         Node node = map[current.x + xDir][current.y + yDir];
         
@@ -55,13 +70,18 @@ public class Dijkstra {
         return null;
     }
     
-    
+    /**
+     * Find path from start to goal in a given map
+     * @param map representation of the map in 2D array of Nodes
+     * @param start start Node (position)
+     * @param goal goal Node (position)
+     * @return lenght of the shortest path found
+     */
     public double findPath(Node[][] map, Node start, Node goal) {
         
         this.map = map;
         int width_x = map.length;
         int height_y = map[0].length;
-        int exDistance = 1;
         BinaryHeap openNodes = new BinaryHeap(width_x * height_y);
        
         
@@ -70,7 +90,6 @@ public class Dijkstra {
         
         while (!openNodes.isEmpty()) {
             Node current = openNodes.remove();            
-            Node tempNode;
             
             //early exit
             if (current.x == goal.x && current.y == goal.y) {
@@ -88,7 +107,6 @@ public class Dijkstra {
             //left
             openNodes.insert(checkNeighbour(current, -1, 0));
             
-            
             //diagonal
             //up-right
             openNodes.insert(checkNeighbour(current, 1, -1));
@@ -104,6 +122,7 @@ public class Dijkstra {
             pathL = current.distance;
         }
         
+        //update path to the map
         Node node = map[goal.x][goal.y];
         while (node.parent != null) {
             map[node.x][node.y].path = true;

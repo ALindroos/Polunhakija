@@ -1,6 +1,10 @@
 
 package polunhakija;
 
+/**
+ * Class for representing nodes in the graph 
+ *
+ */
 
 public class Node {
     
@@ -14,6 +18,13 @@ public class Node {
     int cost;
     boolean jmp;
     
+    
+    /**
+     * 
+     * @param x X-coordinate of the Node
+     * @param y Y-coordinate
+     * distance is initialised as large as possible to make distance comparisons easier 
+     */
     public Node(int x, int y) {
         this.x = x;
         this.y = y;
