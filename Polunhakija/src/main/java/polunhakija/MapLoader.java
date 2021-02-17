@@ -8,11 +8,15 @@ import java.util.Scanner;
 
 public class MapLoader {
     
-    public Node[][] loadMap() {
+    public Node[][] loadMap(String mapName) {
        
+        if (mapName.isEmpty()) {
+            mapName = "AR0015SR.map";
+        }
+        
         String regex = "[^\\d]+";
-        try (Scanner scanner = new Scanner(Paths.get("AR0015SR.map"))) {                        
-            List<String> allLines = Files.readAllLines(Paths.get("AR0015SR.map"));
+        try (Scanner scanner = new Scanner(Paths.get(mapName))) {                        
+            List<String> allLines = Files.readAllLines(Paths.get(mapName));
             int height_y = Integer.parseInt(allLines.get(1).split(regex)[1]);
             int width_x = Integer.parseInt(allLines.get(2).split(regex)[1]);            
             

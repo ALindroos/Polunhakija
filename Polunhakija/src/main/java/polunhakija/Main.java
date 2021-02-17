@@ -5,9 +5,11 @@ public class Main {
     
     public static void main(String[] args) {
         
+        String mapName = args[0];
+        
         MapLoader mapLoader = new MapLoader();
-        Node[][] map1 = mapLoader.loadMap();
-        Node[][] map2 = mapLoader.loadMap();
+        Node[][] map1 = mapLoader.loadMap(mapName);
+        Node[][] map2 = mapLoader.loadMap(mapName);
  
         Node start = new Node(40, 30);
         Node goal = new Node(45, 80);
