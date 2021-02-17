@@ -64,7 +64,6 @@ public class JPS {
      */
     private Node scanPathHor(Node node, int xDir) {
         
-        
         if (node.wall || node.visited) {
             return null;
         }
@@ -106,9 +105,7 @@ public class JPS {
      * @return 
      */
     private Node scanPathVer(Node node, int yDir) {
-        
-        
-        
+             
         if (node.wall || node.visited) {
             return null;
         }
@@ -157,6 +154,35 @@ public class JPS {
         Node yPos = scanPathVer(map[node.x][node.y + 1], 1);
         Node yNeg = scanPathVer(map[node.x][node.y - 1], -1);
         
+        //if any of the scans return node, a jump point is found and it will be
+        //added to the openNodes to examine later
+        if (xPos != null) {
+            //node.jmp = true;
+            //xPos.jmp = true;
+            xPos.parent = node;
+            openNodes.insert(xPos);
+            return null;
+            
+        }
+        if (xNeg != null) {
+            //node.jmp = true;
+            //xNeg.jmp = true;
+            xNeg.parent = node;
+            openNodes.insert(xNeg);
+        }
+        if (yPos != null) {
+            //node.jmp = true;
+            //yPos.jmp = true;
+            yPos.parent = node;
+            openNodes.insert(yPos);
+        }
+        if (yNeg != null) {
+            //node.jmp = true;
+            //yNeg.jmp = true;
+            yNeg.parent = node;
+            openNodes.insert(yNeg);
+        }
+        
         
         //expand diagonally when possible
         //diag x,y
@@ -192,34 +218,7 @@ public class JPS {
         }
         
 
-        //if any of the scans return node, a jump point is found and it will be
-        //added to the openNodes to examine later
         
-        if (xPos != null) {
-            node.jmp = true;
-            xPos.jmp = true;
-            xPos.parent = node;
-            openNodes.insert(xPos);
-            
-        }
-        if (xNeg != null) {
-            node.jmp = true;
-            xNeg.jmp = true;
-            xNeg.parent = node;
-            openNodes.insert(xNeg);
-        }
-        if (yPos != null) {
-            node.jmp = true;
-            yPos.jmp = true;
-            yPos.parent = node;
-            openNodes.insert(yPos);
-        }
-        if (yNeg != null) {
-            node.jmp = true;
-            yNeg.jmp = true;
-            yNeg.parent = node;
-            openNodes.insert(yNeg);
-        }
 
         
         return null;
@@ -251,9 +250,10 @@ public class JPS {
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
             Node tempNode = examineNode(current);
+            
         }
         
-        //calculate distance between all start and goal through the jump points used
+        //calculate distance between start and goal through the jump points used
         Node node = map[goal.x][goal.y];
         while (node.parent != null) {
             pathL = pathL + diagDis(node, node.parent);

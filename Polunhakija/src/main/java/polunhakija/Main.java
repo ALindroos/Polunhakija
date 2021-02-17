@@ -1,5 +1,7 @@
 package polunhakija;
 
+import javax.swing.JFrame;
+
 
 public class Main {
     
@@ -14,17 +16,37 @@ public class Main {
         Node[][] map1 = mapLoader.loadMap(mapName);
         Node[][] map2 = mapLoader.loadMap(mapName);
  
-        Node start = new Node(40, 30);
-        Node goal = new Node(45, 80);
+        Node start = new Node(20, 20);
+        Node goal = new Node(40, 75);
         
-        //Dijkstra dijkstra = new Dijkstra();
-        //double d = dijkstra.findPath(map1, start, goal);
+        Dijkstra dijkstra = new Dijkstra();
+        double d = dijkstra.findPath(map1, start, goal);
         
         JPS jps = new JPS();
         double j = jps.findPath(map2, start, goal);
         
-        //dijkstra.printState();
+        
+        System.out.println("-----------------");
+        System.out.println("Dijkstra: " + d);
+        System.out.println("JPS: " + j);
+        dijkstra.printState();
         jps.printState();
+        
+        
+        //visual
+        /*
+        GridCanvas canvas = new GridCanvas(map1.length, map1[0].length);
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setVisible(true);
+        frame.add(canvas);
+        frame.pack();
+        canvas.updateState(map2);
+        canvas.repaint();
+        */
+        
+        
         
         
     }   

@@ -21,6 +21,7 @@ public class MapLoader {
      */
     public Node[][] loadMap(String mapName) {
        
+        //AR0015SR
         if (mapName.isEmpty()) {
             mapName = "AR0015SR.map";
         }

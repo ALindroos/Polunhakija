@@ -32,11 +32,14 @@ public class GridCanvas extends Canvas {
                     g.setColor(Color.black);
                 }
                 if (node.visited) {
-                    g.setColor(Color.PINK);
+                    g.setColor(Color.LIGHT_GRAY);
                 }
                 if (node.path) {
                     g.setColor(Color.green);
                 } 
+                if (node.jmp) {
+                    g.setColor(Color.red);
+                }
                 
                 g.fillRect(node.x * size, node.y * size, size, size);
                 
