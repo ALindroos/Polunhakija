@@ -9,7 +9,7 @@ public class JPS {
     private BinaryHeap openNodes;
     private Node goal;
     
-    private void printState(Node[][] map) {
+    public void printState() {
         for (int y=0; y<map[0].length; y++) {
             for (int x=0; x<map.length; x++) {
                 

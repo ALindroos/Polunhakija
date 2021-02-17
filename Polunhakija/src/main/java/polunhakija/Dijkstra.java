@@ -5,8 +5,9 @@ package polunhakija;
 public class Dijkstra {
     
     private double pathL;
+    private Node[][] map;
     
-    private void printState(Node[][] map) {
+    public void printState() {
         for (int y=0; y<map[0].length; y++) {
             for (int x=0; x<map.length; x++) {
                 
@@ -34,9 +35,30 @@ public class Dijkstra {
         return pathL;
     }
     
+    private Node checkNeighbour(Node current, int xDir, int yDir) {
+        Node node = map[current.x + xDir][current.y + yDir];
+        
+        if (!node.visited && !node.wall &&
+                node.distance > current.distance + node.cost) {
+            
+            //check if diagonal and adjust distance
+            if (Math.abs(xDir) + Math.abs(yDir) == 1) {
+                node.distance = current.distance + node.cost;
+            } else {
+                node.distance = current.distance + Math.sqrt(2);
+            }
+            
+            node.parent = current;
+            return node;
+        }
+        
+        return null;
+    }
+    
     
     public double findPath(Node[][] map, Node start, Node goal) {
         
+        this.map = map;
         int width_x = map.length;
         int height_y = map[0].length;
         int exDistance = 1;
@@ -56,49 +78,27 @@ public class Dijkstra {
             }
             
             //check neighbours
-            //up           
-            if (current.y > 0) {
-                tempNode = map[current.x][current.y -1];
-                if (!tempNode.visited && !tempNode.wall && 
-                        tempNode.distance > current.distance + exDistance) {
-                    tempNode.distance = current.distance + exDistance;
-                    tempNode.parent = current;
-                    openNodes.insert(tempNode);  
-                }
-            }
- 
+            //ortogonal
+            //up         
+            openNodes.insert(checkNeighbour(current, 0, -1));
             //down
-            if (current.y < height_y) {
-                tempNode = map[current.x][current.y +1];
-                if (!tempNode.visited && !tempNode.wall && 
-                        tempNode.distance > current.distance + exDistance) {
-                    tempNode.distance = current.distance + exDistance;
-                    tempNode.parent = current;
-                    openNodes.insert(tempNode);  
-                }
-            }
-            
+            openNodes.insert(checkNeighbour(current, 0, 1));
             //right
-            if (current.y < width_x) {
-                tempNode = map[current.x + 1][current.y];
-                if (!tempNode.visited && !tempNode.wall &&
-                        tempNode.distance > current.distance + exDistance) {
-                    tempNode.distance = current.distance + exDistance;
-                    tempNode.parent = current;
-                    openNodes.insert(tempNode);  
-                }
-            }
-            
+            openNodes.insert(checkNeighbour(current, 1, 0));
             //left
-            if (current.y > 0) {
-                tempNode = map[current.x - 1][current.y];
-                if (!tempNode.visited && !tempNode.wall &&
-                        tempNode.distance > current.distance + exDistance) {
-                    tempNode.distance = current.distance + exDistance;
-                    tempNode.parent = current;
-                    openNodes.insert(tempNode);  
-                }
-            }
+            openNodes.insert(checkNeighbour(current, -1, 0));
+            
+            
+            //diagonal
+            //up-right
+            openNodes.insert(checkNeighbour(current, 1, -1));
+            //up-left
+            openNodes.insert(checkNeighbour(current, -1, -1));
+            //down-right
+            openNodes.insert(checkNeighbour(current, 1, 1));
+            //down-left
+            openNodes.insert(checkNeighbour(current, -1, 1));
+            
 
             current.visited = true;  
             pathL = current.distance;

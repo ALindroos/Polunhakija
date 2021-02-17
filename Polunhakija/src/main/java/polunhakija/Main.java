@@ -5,7 +5,10 @@ public class Main {
     
     public static void main(String[] args) {
         
-        String mapName = args[0];
+        String mapName = "";
+        if (args.length > 0) {
+            mapName = args[0];
+        }
         
         MapLoader mapLoader = new MapLoader();
         Node[][] map1 = mapLoader.loadMap(mapName);
@@ -20,8 +23,9 @@ public class Main {
         JPS jps = new JPS();
         double j = jps.findPath(map2, start, goal);
         
-        System.out.println("Dijkstra: " + d);
-        System.out.println("Jump point Search: " + j);
+        dijkstra.printState();
+        jps.printState();
+        
         
     }   
 }
