@@ -40,8 +40,10 @@ public class JPS {
     }
     
 
-    private int manhattanDis(Node a, Node b) {
-        return (Math.abs(a.x - b.x) + Math.abs(a.y - b.y));
+    private double diagDis(Node a, Node b) {
+        double dx = Math.abs(a.x - b.x);
+        double dy = Math.abs(a.y - b.y);
+        return Math.sqrt((dx * dx) + (dy * dy));
     }
     
     
@@ -187,7 +189,7 @@ public class JPS {
     }
     
     
-    public Node[][] findPath(Node[][] map, Node start, Node goal) {
+    public double findPath(Node[][] map, Node start, Node goal) {
         
         this.map = map;
         int width_x = map.length;
@@ -205,21 +207,16 @@ public class JPS {
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
             Node tempNode = examineNode(current);
-            
-            System.out.println(current.x + ":" + current.y);
-            
-            if (current.x == goal.x && current.y == goal.y) {
-                System.out.println("GOAL");
-            }
         }
         
-        
-        
-
-        //testPrint
-        printState(map);
+        Node node = map[goal.x][goal.y];
+        while (node.parent != null) {
+            pathL = pathL + diagDis(node, node.parent);
+            map[node.x][node.y].path = true;
+            node = node.parent;          
+        }  
         
   
-        return map;
+        return pathL;
     }   
 }

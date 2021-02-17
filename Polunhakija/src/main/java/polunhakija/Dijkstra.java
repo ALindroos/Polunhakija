@@ -4,7 +4,7 @@ package polunhakija;
 
 public class Dijkstra {
     
-    private int pathL;
+    private double pathL;
     
     private void printState(Node[][] map) {
         for (int y=0; y<map[0].length; y++) {
@@ -30,12 +30,12 @@ public class Dijkstra {
         System.out.println("Path: " + pathL );       
     }
         
-    public int getPathL() {
+    public double getPathL() {
         return pathL;
     }
     
     
-    public Node[][] findPath(Node[][] map, Node start, Node goal) {
+    public double findPath(Node[][] map, Node start, Node goal) {
         
         int width_x = map.length;
         int height_y = map[0].length;
@@ -100,22 +100,17 @@ public class Dijkstra {
                 }
             }
 
-            current.visited = true;   
-
+            current.visited = true;  
+            pathL = current.distance;
         }
         
-        pathL = 0;
         Node node = map[goal.x][goal.y];
         while (node.parent != null) {
             map[node.x][node.y].path = true;
             node = node.parent;
-            pathL++;
         }  
-
-        //testPrint
-        printState(map);
         
-        return map;
+        return pathL;
         
     }
     
