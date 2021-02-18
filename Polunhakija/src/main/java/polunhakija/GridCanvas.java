@@ -8,7 +8,7 @@ import java.awt.Graphics;
 public class GridCanvas extends Canvas {
     
     private Node[][] map;
-    private int size = 8;
+    private int size = 2;
     
     public GridCanvas(int x, int y) {
         setSize(x * size, y * size);

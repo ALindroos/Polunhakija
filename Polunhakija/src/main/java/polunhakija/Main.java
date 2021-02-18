@@ -16,8 +16,8 @@ public class Main {
         Node[][] map1 = mapLoader.loadMap(mapName);
         Node[][] map2 = mapLoader.loadMap(mapName);
  
-        Node start = new Node(20, 20);
-        Node goal = new Node(40, 75);
+        Node start = new Node(251, 53);
+        Node goal = new Node(180, 115);
         
         Dijkstra dijkstra = new Dijkstra();
         double d = dijkstra.findPath(map1, start, goal);
@@ -29,12 +29,12 @@ public class Main {
         System.out.println("-----------------");
         System.out.println("Dijkstra: " + d);
         System.out.println("JPS: " + j);
-        dijkstra.printState();
-        jps.printState();
+        //dijkstra.printState();
+        //jps.printState();
         
         
         //visual
-        /*
+        
         GridCanvas canvas = new GridCanvas(map1.length, map1[0].length);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,7 +44,8 @@ public class Main {
         frame.pack();
         canvas.updateState(map2);
         canvas.repaint();
-        */
+        
+        
         
         
         

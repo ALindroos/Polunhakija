@@ -74,7 +74,7 @@ public class JPS {
         }
         
         node.visited = true;    
-        
+        node.distance = diagDis(node, goal);
         
         //wall or visited node straight ahead, so this row can be ignored
         if (map[node.x + xDir][node.y].wall ||
@@ -114,6 +114,7 @@ public class JPS {
             return node;
         }
         node.visited = true;
+        node.distance = diagDis(node, goal);
 
         if (map[node.x][node.y + yDir].wall || 
                 map[node.x][node.y + yDir].visited) {
@@ -138,7 +139,7 @@ public class JPS {
      * @param node
      * @return 
      */
-    private Node examineNode(Node node) {
+    private Node examineNode(Node node, int dir) {
         
         //early exit
         if (node.x == goal.x && node.y == goal.y) {
@@ -146,7 +147,7 @@ public class JPS {
         }
         
         Node tempNode;
-        node.visited = true;
+        map[node.x][node.y].visited = true;
         
         //scan all ortogonal lines
         Node xPos = scanPathHor(map[node.x + 1][node.y], 1);
@@ -161,8 +162,6 @@ public class JPS {
             //xPos.jmp = true;
             xPos.parent = node;
             openNodes.insert(xPos);
-            return null;
-            
         }
         if (xNeg != null) {
             //node.jmp = true;
@@ -181,40 +180,50 @@ public class JPS {
             //yNeg.jmp = true;
             yNeg.parent = node;
             openNodes.insert(yNeg);
+
         }
         
         
         //expand diagonally when possible
         //diag x,y
-        if (!map[node.x + 1][node.y + 1].wall &&
+        if (dir == 0 || dir == 3) {
+            if (!map[node.x + 1][node.y + 1].wall &&
                 !map[node.x + 1][node.y + 1].visited) {
-            tempNode = map[node.x + 1][node.y + 1];
-            tempNode.parent = node;
-            examineNode(tempNode);
+                tempNode = map[node.x + 1][node.y + 1];
+                tempNode.parent = node;
+                examineNode(tempNode, 3);
+            }
         }
         
+        
         //diag x, -y
-        if (!map[node.x + 1][node.y - 1].wall &&
-                !map[node.x + 1][node.y - 1].visited) {
-            tempNode = map[node.x + 1][node.y - 1];
-            tempNode.parent = node;
-            examineNode(tempNode);
+        if (dir == 0 || dir == 9) {
+            if (!map[node.x + 1][node.y - 1].wall &&
+                    !map[node.x + 1][node.y - 1].visited) {
+                tempNode = map[node.x + 1][node.y - 1];
+                tempNode.parent = node;
+                examineNode(tempNode, 9);
+            }
         }
         
         //diag -x,y
-        if (!map[node.x - 1][node.y + 1].wall &&
-                !map[node.x - 1][node.y + 1].visited) {
-            tempNode = map[node.x - 1][node.y + 1];
-            tempNode.parent = node;
-            examineNode(tempNode);
+        if (dir == 0 || dir == 1) {
+            if (!map[node.x - 1][node.y + 1].wall &&
+                    !map[node.x - 1][node.y + 1].visited) {
+                tempNode = map[node.x - 1][node.y + 1];
+                tempNode.parent = node;
+                examineNode(tempNode, 1);
+            }
         }
         
         //diag -x,-y
-        if (!map[node.x - 1][node.y - 1].wall &&
-                !map[node.x - 1][node.y - 1].visited) {
-            tempNode = map[node.x - 1][node.y - 1];
-            tempNode.parent = node;
-            examineNode(tempNode);
+        if (dir == 0 || dir == 7) {
+            if (!map[node.x - 1][node.y - 1].wall &&
+                    !map[node.x - 1][node.y - 1].visited) {
+                tempNode = map[node.x - 1][node.y - 1];
+                tempNode.parent = node;
+                examineNode(tempNode,7);
+            }
         }
         
 
@@ -244,12 +253,14 @@ public class JPS {
         map[goal.x][goal.y].path = true;
         
         start.distance = 0;
+        map[start.x][start.y].distance = 0;
         this.goal = goal;
         openNodes.insert(start);
         
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
-            Node tempNode = examineNode(current);
+            Node tempNode = examineNode(current, 0);
+            
             
         }
         
