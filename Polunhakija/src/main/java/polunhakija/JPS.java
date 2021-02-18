@@ -11,6 +11,7 @@ public class JPS {
     private Node[][] map;
     private BinaryHeap openNodes;
     private Node goal;
+    private boolean earlyExit;
     
     public void printState() {
         for (int y=0; y<map[0].length; y++) {
@@ -68,13 +69,12 @@ public class JPS {
             return null;
         }
     
+        node.visited = true;    
+        node.distance = diagDis(node, goal);
         
         if (node.x == goal.x && node.y == goal.y) {
             return node;
         }
-        
-        node.visited = true;    
-        node.distance = diagDis(node, goal);
         
         //wall or visited node straight ahead, so this row can be ignored
         if (map[node.x + xDir][node.y].wall ||
@@ -110,11 +110,12 @@ public class JPS {
             return null;
         }
         
+        node.visited = true;
+        node.distance = diagDis(node, goal);
+        
         if (node.x == goal.x && node.y == goal.y) {
             return node;
         }
-        node.visited = true;
-        node.distance = diagDis(node, goal);
 
         if (map[node.x][node.y + yDir].wall || 
                 map[node.x][node.y + yDir].visited) {
@@ -142,7 +143,11 @@ public class JPS {
     private Node examineNode(Node node, int dir) {
         
         //early exit
+        if (earlyExit) {
+            return null;
+        }
         if (node.x == goal.x && node.y == goal.y) {
+            earlyExit = true;
             return node;
         }
         
@@ -256,11 +261,11 @@ public class JPS {
         map[start.x][start.y].distance = 0;
         this.goal = goal;
         openNodes.insert(start);
+        earlyExit = false;
         
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
             Node tempNode = examineNode(current, 0);
-            
             
         }
         

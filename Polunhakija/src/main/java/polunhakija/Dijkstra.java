@@ -94,6 +94,7 @@ public class Dijkstra {
             current.visited = true;  
             
             //early exit
+            
             if (current.x == goal.x && current.y == goal.y) {
                 break;
             }

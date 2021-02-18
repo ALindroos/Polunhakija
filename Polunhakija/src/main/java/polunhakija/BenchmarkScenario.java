@@ -57,7 +57,9 @@ public class BenchmarkScenario {
                 double j = jps.findPath(mapJ, start, goal);
                 
                 
-                if (Math.abs(optimal - d) < 0.01 && Math.abs(optimal - j) < 0.01) {
+                double threshold = optimal / 100;
+                
+                if (Math.abs(optimal - d) < threshold && Math.abs(optimal - j) < threshold) {
                     //System.out.println("Test " + i +  " OK!");
                     //System.out.println("Length: " + optimal);
                     //System.out.println("-----------");
