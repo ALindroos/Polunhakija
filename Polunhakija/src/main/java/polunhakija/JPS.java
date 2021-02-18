@@ -265,6 +265,7 @@ public class JPS {
         }
         
         //calculate distance between start and goal through the jump points used
+        pathL = 0;
         Node node = map[goal.x][goal.y];
         while (node.parent != null) {
             pathL = pathL + diagDis(node, node.parent);

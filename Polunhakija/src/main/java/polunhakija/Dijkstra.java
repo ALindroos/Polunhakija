@@ -90,6 +90,8 @@ public class Dijkstra {
         
         while (!openNodes.isEmpty()) {
             Node current = openNodes.remove();            
+            pathL = current.distance;
+            current.visited = true;  
             
             //early exit
             if (current.x == goal.x && current.y == goal.y) {
@@ -117,9 +119,6 @@ public class Dijkstra {
             //down-left
             openNodes.insert(checkNeighbour(current, -1, 1));
             
-
-            current.visited = true;  
-            pathL = current.distance;
         }
         
         //update path to the map
