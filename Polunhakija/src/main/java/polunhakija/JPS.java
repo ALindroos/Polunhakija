@@ -133,6 +133,40 @@ public class JPS {
         return scanPathVer(map[node.x][node.y + yDir], yDir);
     }
     
+    /**
+     * if any horizontal or vertical scan finds an jumpNode,
+     * it is added to openNodes to be examined later
+     * @param found found jump point in a scan
+     * @param current currently examined node
+     */
+    private void addJumpPoint(Node found, Node current) {
+        if (found == null) {
+            return;
+        }
+        current.jmp = true;
+        found.jmp = true;
+        found.parent = current;
+        found.distance = found.distance + diagDis(found, goal);
+        openNodes.insert(found);
+    }
+    
+    
+    /**
+     * check if next diagonal node can be moved to and examine it
+     * @param node currently examined node
+     * @param xDir direction in x-coordinates
+     * @param yDir direction in y-coordinates
+     */
+    public void moveDiag(Node node, int xDir, int yDir) {
+        Node target = map[node.x + xDir][node.y + yDir];
+        
+        if (!target.wall && !target.visited) {
+            target.parent = node;
+            target.distance = node.distance + Math.sqrt(2);
+            examineNode(target, xDir, yDir);
+        }
+    }
+    
     
     /**
      * Examine current node in the openSet, first scan all ortogonal lines,
@@ -140,110 +174,37 @@ public class JPS {
      * @param node
      * @return 
      */
-    private Node examineNode(Node node, int dir) {
+    private void examineNode(Node node, int xDir, int yDir) {
+        node.visited = true;
         
         //early exit
         if (earlyExit) {
-            return null;
+            return;
         }
         if (node.x == goal.x && node.y == goal.y) {
             earlyExit = true;
-            return node;
+            return;
         }
-        
-        Node tempNode;
-        map[node.x][node.y].visited = true;
-        
+
         //scan all ortogonal lines
-        Node xPos = scanPathHor(map[node.x + 1][node.y], 1);
-        Node xNeg = scanPathHor(map[node.x -1][node.y], -1);
-        Node yPos = scanPathVer(map[node.x][node.y + 1], 1);
-        Node yNeg = scanPathVer(map[node.x][node.y - 1], -1);
-        
         //if any of the scans return node, a jump point is found and it will be
         //added to the openNodes to examine later
-        if (xPos != null) {
-            //node.jmp = true;
-            //xPos.jmp = true;
-            xPos.parent = node;
-            xPos.distance = xPos.distance + diagDis(xPos, goal);
-            openNodes.insert(xPos);
-        }
-        if (xNeg != null) {
-            //node.jmp = true;
-            //xNeg.jmp = true;
-            xNeg.parent = node;
-            xNeg.distance = xNeg.distance + diagDis(xNeg, goal);
-            openNodes.insert(xNeg);
-        }
-        if (yPos != null) {
-            //node.jmp = true;
-            //yPos.jmp = true;
-            yPos.parent = node;
-            yPos.distance = yPos.distance + diagDis(yPos, goal);
-            openNodes.insert(yPos);
-        }
-        if (yNeg != null) {
-            //node.jmp = true;
-            //yNeg.jmp = true;
-            yNeg.parent = node;
-            yNeg.distance = yNeg.distance + diagDis(yNeg, goal);
-            openNodes.insert(yNeg);
-
+        addJumpPoint(scanPathHor(map[node.x + 1][node.y], 1), node);
+        addJumpPoint(scanPathHor(map[node.x -1][node.y], -1), node);
+        addJumpPoint(scanPathVer(map[node.x][node.y + 1], 1), node);
+        addJumpPoint(scanPathVer(map[node.x][node.y - 1], -1), node);
+         
+        //expand diagonally when possible, keeping the same direction
+        if (xDir == 0 && yDir == 0) {
+            moveDiag(node, 1, 1);
+            moveDiag(node, 1, -1);
+            moveDiag(node, -1, 1);
+            moveDiag(node, -1, -1);
+        } else {
+            moveDiag(node, xDir, yDir);
         }
         
-        
-        //expand diagonally when possible
-        //diag x,y
-        if (dir == 0 || dir == 3) {
-            if (!map[node.x + 1][node.y + 1].wall &&
-                !map[node.x + 1][node.y + 1].visited) {
-                tempNode = map[node.x + 1][node.y + 1];
-                tempNode.parent = node;
-                tempNode.distance = node.distance + Math.sqrt(2);
-                examineNode(tempNode, 3);
-            }
-        }
-        
-        
-        //diag x, -y
-        if (dir == 0 || dir == 9) {
-            if (!map[node.x + 1][node.y - 1].wall &&
-                    !map[node.x + 1][node.y - 1].visited) {
-                tempNode = map[node.x + 1][node.y - 1];
-                tempNode.parent = node;
-                tempNode.distance = node.distance + Math.sqrt(2);
-                examineNode(tempNode, 9);
-            }
-        }
-        
-        //diag -x,y
-        if (dir == 0 || dir == 1) {
-            if (!map[node.x - 1][node.y + 1].wall &&
-                    !map[node.x - 1][node.y + 1].visited) {
-                tempNode = map[node.x - 1][node.y + 1];
-                tempNode.parent = node;
-                tempNode.distance = node.distance + Math.sqrt(2);
-                examineNode(tempNode, 1);
-            }
-        }
-        
-        //diag -x,-y
-        if (dir == 0 || dir == 7) {
-            if (!map[node.x - 1][node.y - 1].wall &&
-                    !map[node.x - 1][node.y - 1].visited) {
-                tempNode = map[node.x - 1][node.y - 1];
-                tempNode.parent = node;
-                tempNode.distance = node.distance + Math.sqrt(2);
-                examineNode(tempNode,7);
-            }
-        }
-        
-
-        
-
-        
-        return null;
+        return;
     }
     
     /**
@@ -273,7 +234,7 @@ public class JPS {
         
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
-            Node tempNode = examineNode(current, 0);
+            examineNode(current, 0, 0);
             
         }
         

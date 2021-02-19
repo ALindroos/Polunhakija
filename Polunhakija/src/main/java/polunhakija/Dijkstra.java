@@ -70,12 +70,20 @@ public class Dijkstra {
         return null;
     }
     
+    private void updatePath(Node goal) {
+        Node node = map[goal.x][goal.y];
+        while (node.parent != null) {
+            map[node.x][node.y].path = true;
+            node = node.parent;
+        }  
+    }
+    
     /**
      * Find path from start to goal in a given map
      * @param map representation of the map in 2D array of Nodes
      * @param start start Node (position)
      * @param goal goal Node (position)
-     * @return lenght of the shortest path found
+     * @return length of the shortest path found
      */
     public double findPath(Node[][] map, Node start, Node goal) {
         
@@ -121,17 +129,8 @@ public class Dijkstra {
             openNodes.insert(checkNeighbour(current, -1, 1));
             
         }
-        
-        //update path to the map
-        Node node = map[goal.x][goal.y];
-        while (node.parent != null) {
-            map[node.x][node.y].path = true;
-            node = node.parent;
-        }  
-        
+        updatePath(goal);
         return pathL;
         
-    }
-    
-    
+    } 
 }

@@ -13,7 +13,7 @@ public class Main {
         }
         
         
-        /*
+        
         MapLoader mapLoader = new MapLoader();
         Node[][] map1 = mapLoader.loadMap(mapName);
         Node[][] map2 = mapLoader.loadMap(mapName);
@@ -34,15 +34,15 @@ public class Main {
         System.out.println("JPS: " + j);
         //dijkstra.printState();
         //jps.printState();
-        */
         
-        BenchmarkScenario benchmark = new BenchmarkScenario();
-        benchmark.testScenario("AR0011SR.map", 0, 217);
+        
+        //BenchmarkScenario benchmark = new BenchmarkScenario();
+        //benchmark.testScenario("AR0011SR.map", 0, 217);
         
         
         //visual
         
-        /*
+        
         GridCanvas canvas = new GridCanvas(map1.length, map1[0].length);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,9 +50,9 @@ public class Main {
         frame.setVisible(true);
         frame.add(canvas);
         frame.pack();
-        canvas.updateState(map1);
+        canvas.updateState(map2);
         canvas.repaint();
-        */
+        
         
         
         
