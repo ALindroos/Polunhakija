@@ -18,8 +18,8 @@ public class Main {
         Node[][] map1 = mapLoader.loadMap(mapName);
         Node[][] map2 = mapLoader.loadMap(mapName);
  
-        Node start = new Node(50, 50);
-        Node goal = new Node(49, 51);
+        Node start = new Node(467, 252);
+        Node goal = new Node(450, 264);
         
         
         Dijkstra dijkstra = new Dijkstra();
@@ -33,11 +33,11 @@ public class Main {
         System.out.println("Dijkstra: " + d);
         System.out.println("JPS: " + j);
         //dijkstra.printState();
-        jps.printState();
+        //jps.printState();
         */
         
         BenchmarkScenario benchmark = new BenchmarkScenario();
-        benchmark.testScenario("AR0011SR.map", 0,10);
+        benchmark.testScenario("AR0011SR.map", 0, 217);
         
         
         //visual
@@ -50,7 +50,7 @@ public class Main {
         frame.setVisible(true);
         frame.add(canvas);
         frame.pack();
-        canvas.updateState(map2);
+        canvas.updateState(map1);
         canvas.repaint();
         */
         

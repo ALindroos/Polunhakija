@@ -23,7 +23,7 @@ public class MapLoader {
        
         //AR0015SR
         if (mapName.isEmpty()) {
-            mapName = "AR0015SR.map";
+            mapName = "AR0011SR.map";
         }
         
         String regex = "[^\\d]+";

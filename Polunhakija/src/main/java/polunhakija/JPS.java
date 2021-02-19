@@ -69,8 +69,8 @@ public class JPS {
             return null;
         }
     
-        node.visited = true;    
-        node.distance = diagDis(node, goal);
+        node.visited = true; 
+        node.distance = map[node.x - xDir][node.y].distance + node.cost;
         
         if (node.x == goal.x && node.y == goal.y) {
             return node;
@@ -111,7 +111,7 @@ public class JPS {
         }
         
         node.visited = true;
-        node.distance = diagDis(node, goal);
+        node.distance = map[node.x][node.y - yDir].distance + node.cost;
         
         if (node.x == goal.x && node.y == goal.y) {
             return node;
@@ -166,24 +166,28 @@ public class JPS {
             //node.jmp = true;
             //xPos.jmp = true;
             xPos.parent = node;
+            xPos.distance = xPos.distance + diagDis(xPos, goal);
             openNodes.insert(xPos);
         }
         if (xNeg != null) {
             //node.jmp = true;
             //xNeg.jmp = true;
             xNeg.parent = node;
+            xNeg.distance = xNeg.distance + diagDis(xNeg, goal);
             openNodes.insert(xNeg);
         }
         if (yPos != null) {
             //node.jmp = true;
             //yPos.jmp = true;
             yPos.parent = node;
+            yPos.distance = yPos.distance + diagDis(yPos, goal);
             openNodes.insert(yPos);
         }
         if (yNeg != null) {
             //node.jmp = true;
             //yNeg.jmp = true;
             yNeg.parent = node;
+            yNeg.distance = yNeg.distance + diagDis(yNeg, goal);
             openNodes.insert(yNeg);
 
         }
@@ -196,6 +200,7 @@ public class JPS {
                 !map[node.x + 1][node.y + 1].visited) {
                 tempNode = map[node.x + 1][node.y + 1];
                 tempNode.parent = node;
+                tempNode.distance = node.distance + Math.sqrt(2);
                 examineNode(tempNode, 3);
             }
         }
@@ -207,6 +212,7 @@ public class JPS {
                     !map[node.x + 1][node.y - 1].visited) {
                 tempNode = map[node.x + 1][node.y - 1];
                 tempNode.parent = node;
+                tempNode.distance = node.distance + Math.sqrt(2);
                 examineNode(tempNode, 9);
             }
         }
@@ -217,6 +223,7 @@ public class JPS {
                     !map[node.x - 1][node.y + 1].visited) {
                 tempNode = map[node.x - 1][node.y + 1];
                 tempNode.parent = node;
+                tempNode.distance = node.distance + Math.sqrt(2);
                 examineNode(tempNode, 1);
             }
         }
@@ -227,6 +234,7 @@ public class JPS {
                     !map[node.x - 1][node.y - 1].visited) {
                 tempNode = map[node.x - 1][node.y - 1];
                 tempNode.parent = node;
+                tempNode.distance = node.distance + Math.sqrt(2);
                 examineNode(tempNode,7);
             }
         }
