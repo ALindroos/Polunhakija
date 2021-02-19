@@ -65,6 +65,8 @@ public class JPS {
      */
     private Node scanPathHor(Node node, int xDir) {
         
+        Node next = map[node.x + xDir][node.y];
+        
         if (node.wall || node.visited) {
             return null;
         }
@@ -77,25 +79,24 @@ public class JPS {
         }
         
         //wall or visited node straight ahead, so this row can be ignored
-        if (map[node.x + xDir][node.y].wall ||
-                map[node.x + xDir][node.y].visited) {
+        if (next.wall || next.visited) {
             return null;
         }
         
         // goal straight ahead, node is jump point
-        if (node.x + xDir == goal.x && node.y == goal.y) {
+        if (next.x == goal.x && next.y == goal.y) {
             return node;
         }
         
         //wall directly next to the node, but diagonally forward node is open next
         //to it, so the node has forced neighbour and needs to be examined later
-        if ( (map[node.x][node.y + 1].wall && !map[node.x + xDir][node.y + 1].wall) ||
-                (map[node.x][node.y - 1].wall && !map[node.x + xDir][node.y - 1].wall) ) {
+        if ( (map[node.x][node.y + 1].wall && !map[next.x][next.y + 1].wall) ||
+                (map[node.x][node.y - 1].wall && !map[next.x][next.y - 1].wall) ) {
             return node;
         }
         
         //recursively iterate on the row
-        return scanPathHor(map[node.x + xDir][node.y], xDir);
+        return scanPathHor(next, xDir);
     }
     
     /**
@@ -110,6 +111,7 @@ public class JPS {
             return null;
         }
         
+        Node next = map[node.x][node.y + yDir];
         node.visited = true;
         node.distance = map[node.x][node.y - yDir].distance + node.cost;
         
@@ -117,20 +119,19 @@ public class JPS {
             return node;
         }
 
-        if (map[node.x][node.y + yDir].wall || 
-                map[node.x][node.y + yDir].visited) {
+        if (next.wall || next.visited) {
             return null;
         }
         
-        if (node.x == goal.x && node.y + yDir == goal.y) {
+        if (next.x == goal.x && next.y == goal.y) {
             return node;
         }
         
-        if ( (map[node.x + 1][node.y].wall && !map[node.x + 1][node.y + yDir].wall) ||
-                (map[node.x - 1][node.y].wall && !map[node.x - 1][node.y + yDir].wall) ) {
+        if ( (map[node.x + 1][node.y].wall && !map[next.x + 1][next.y].wall) ||
+                (map[node.x - 1][node.y].wall && !map[next.x - 1][next.y].wall) ) {
             return node;
         }
-        return scanPathVer(map[node.x][node.y + yDir], yDir);
+        return scanPathVer(next, yDir);
     }
     
     /**
@@ -195,6 +196,7 @@ public class JPS {
         addJumpPoint(scanPathVer(map[node.x][node.y - 1], -1), node);
          
         //expand diagonally when possible, keeping the same direction
+        //in case of a new jump point expand in all directions
         if (xDir == 0 && yDir == 0) {
             moveDiag(node, 1, 1);
             moveDiag(node, 1, -1);
@@ -203,8 +205,17 @@ public class JPS {
         } else {
             moveDiag(node, xDir, yDir);
         }
-        
-        return;
+    }
+    
+    private double calculatePath() {
+        pathL = 0;
+        Node node = map[goal.x][goal.y];
+        while (node.parent != null) {
+            pathL = pathL + diagDis(node, node.parent);
+            map[node.x][node.y].path = true;
+            node = node.parent;          
+        }
+        return pathL;
     }
     
     /**
@@ -237,17 +248,7 @@ public class JPS {
             examineNode(current, 0, 0);
             
         }
-        
-        //calculate distance between start and goal through the jump points used
-        pathL = 0;
-        Node node = map[goal.x][goal.y];
-        while (node.parent != null) {
-            pathL = pathL + diagDis(node, node.parent);
-            map[node.x][node.y].path = true;
-            node = node.parent;          
-        }  
-        
   
-        return pathL;
+        return calculatePath();
     }   
 }
