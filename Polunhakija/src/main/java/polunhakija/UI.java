@@ -34,7 +34,7 @@ public class UI {
     private void runBenchmark() {
         System.out.println("-----------");
         BenchmarkScenario benchmark = new BenchmarkScenario();
-        benchmark.testScenario(mapName, 0, 500);
+        benchmark.testScenario(mapName, 0, 100);
     }
     
     private void visualize() {
@@ -68,6 +68,8 @@ public class UI {
         Visualizer visualizer = new Visualizer();
         visualizer.setUp(mapJ.length, mapJ[0].length);
         visualizer.update(mapJ);
+        
+        
         
         
         

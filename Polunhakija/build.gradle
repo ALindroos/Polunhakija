@@ -29,6 +29,13 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
 }
 
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'polunhakija.Main')
+    }
+}
+
 jacocoTestReport {
     reports {
         xml.enabled = true

@@ -1,6 +1,9 @@
 
 package polunhakija;
 
+import java.time.Duration;
+import java.time.Instant;
+
 /**
  * implementation of Jump point search (JPS) algorithm
  *
@@ -12,9 +15,9 @@ public class JPS {
     private BinaryHeap openNodes;
     private Node goal;
     private boolean earlyExit;
-    private long runTime;
+    private double runTime;
     
-    public long getRunTime() {
+    public double getRunTime() {
         return runTime;
     }
     
@@ -29,6 +32,22 @@ public class JPS {
         double dx = Math.abs(a.x - b.x);
         double dy = Math.abs(a.y - b.y);
         return Math.sqrt((dx * dx) + (dy * dy));
+    }
+    
+    /**
+     * measure a diagonal heuristic between 2 nodes
+     * at the moment works worse than just pure diagonal Distance between nodes
+     * @param a
+     * @param b
+     * @return 
+     */
+    private double heuristic(Node a, Node b) {
+        double D = a.cost;
+        double D2 = Math.sqrt(2);
+        
+        double dx = Math.abs(a.x - b.x );
+        double dy = Math.abs(a.y - b.y);
+        return D * (dx + dy) + (D2 - 2 * D) * Math.min(dx, dy); 
     }
     
     
@@ -240,13 +259,15 @@ public class JPS {
         earlyExit = false;
         
         
-        long aTime = System.currentTimeMillis();
+        Instant a = Instant.now();
+        
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
             examineNode(current, 0, 0);  
         }
-        long bTime = System.currentTimeMillis();
-        runTime = bTime - aTime;
+        
+        Instant b = Instant.now();
+        runTime = Duration.between(a, b).getNano() / 1000000;
         
   
         return calculatePath();

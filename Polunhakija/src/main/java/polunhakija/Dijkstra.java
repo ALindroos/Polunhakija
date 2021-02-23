@@ -1,6 +1,9 @@
 
 package polunhakija;
 
+import java.time.Duration;
+import java.time.Instant;
+
 /**
  * implementation of Dijkstra's algorithm with 8-way moves
  * 
@@ -9,14 +12,14 @@ public class Dijkstra {
     
     private double pathL;
     private Node[][] map;
-    private long runTime;
+    private double runTime;
     
     
     public double getPathL() {
         return pathL;
     }
     
-    public long getRunTime() {
+    public double getRunTime() {
         return runTime;
     }
     
@@ -92,7 +95,8 @@ public class Dijkstra {
         start.distance = 0;
         openNodes.insert(start);
         
-        long aTime = System.currentTimeMillis();
+        Instant a = Instant.now();
+        
         while (!openNodes.isEmpty()) {
             Node current = openNodes.remove();            
             pathL = current.distance;
@@ -115,8 +119,9 @@ public class Dijkstra {
             openNodes.insert(checkNeighbour(current, -1,  1)); //bottom-left
             
         }
-        long bTime = System.currentTimeMillis();
-        runTime = bTime - aTime;
+        
+        Instant b = Instant.now();
+        runTime = Duration.between(a, b).getNano() / 1000000;
         
         updatePath(goal);
         return pathL;

@@ -67,8 +67,8 @@ public class BenchmarkScenario {
                     System.out.println("Missmatch! Test " + i);
                     System.out.println(start.x + ":" + start.y + " -> " +
                             goal.x + ":" + goal.y);
-                    System.out.println("Dijkstra: " + d + " - " + dijkstra.getRunTime());
-                    System.out.println("JPS: " + j + " - " + jps.getRunTime());
+                    System.out.println("Dijkstra: " + d + " | " + dijkstra.getRunTime() + "ms");
+                    System.out.println("JPS: " + j + " | " + jps.getRunTime() + "ms");
                     System.out.println("Optimal: " + optimal);
                     System.out.println("-------------------");
                 }
