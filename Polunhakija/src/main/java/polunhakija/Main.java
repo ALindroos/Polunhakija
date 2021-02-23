@@ -1,5 +1,6 @@
 package polunhakija;
 
+import java.util.Scanner;
 import javax.swing.JFrame;
 
 
@@ -7,6 +8,14 @@ public class Main {
     
     public static void main(String[] args) {
         
+        
+        UI ui = new UI();
+        ui.run();
+        
+        
+        
+        
+        /*
         String mapName = "";
         if (args.length > 0) {
             mapName = args[0];
@@ -53,7 +62,7 @@ public class Main {
         canvas.updateState(map2);
         canvas.repaint();
         
-        
+        */
         
         
         

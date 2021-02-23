@@ -2,7 +2,7 @@
 package polunhakija;
 
 /**
- * implementaion of Dijkstra's algorithm with 8-way moves
+ * implementation of Dijkstra's algorithm with 8-way moves
  * 
  */
 public class Dijkstra {
@@ -10,37 +10,26 @@ public class Dijkstra {
     private double pathL;
     private Node[][] map;
     
-    /**
-     * prints ASCII representation of the graph
-     */
-    public void printState() {
-        for (int y=0; y<map[0].length; y++) {
-            for (int x=0; x<map.length; x++) {
-                
-                if (map[x][y].wall) {
-                    System.out.print("&");
-                    continue;
-                    
-                }
-                if (map[x][y].path) {
-                    System.out.print("P");
-                    continue;
-                }
-                if (map[x][y].visited) {
-                    System.out.print("v");
-                    continue;
-                }
-                System.out.print(".");            
-            }
-            System.out.println();
-        }
-        System.out.println("Path: " + pathL );       
-    }
-        
+    
     public double getPathL() {
         return pathL;
     }
     
+    /**
+     * Checks if the algorithm is trying to cross corners
+     * @param node current node
+     * @param xDir movement in x-coords
+     * @param yDir movement in y-coords
+     * @return true if path is crossing a corner, false otherwise
+     */
+    private boolean checkCorners(Node current, int xDir, int yDir) {
+        
+        if(map[current.x + xDir][current.y].wall || 
+                map[current.x][current.y + yDir].wall) {
+            return true;
+        }
+        return false;
+    }
     
     /**
      * examine neighbour of current node in given direction and return it if it needs
@@ -51,20 +40,21 @@ public class Dijkstra {
      * @return Node if it follows requirements, else null
      */
     private Node checkNeighbour(Node current, int xDir, int yDir) {
-        Node node = map[current.x + xDir][current.y + yDir];
+        Node next = map[current.x + xDir][current.y + yDir];
         
-        if (!node.visited && !node.wall &&
-                node.distance > current.distance + node.cost) {
+        if (!next.visited && !next.wall &&
+                next.distance > current.distance + next.cost &&
+                !checkCorners(current, xDir, yDir)) {
             
             //check if diagonal and adjust distance
             if (Math.abs(xDir) + Math.abs(yDir) == 1) {
-                node.distance = current.distance + node.cost;
+                next.distance = current.distance + next.cost;
             } else {
-                node.distance = current.distance + Math.sqrt(2);
+                next.distance = current.distance + Math.sqrt(2);
             }
             
-            node.parent = current;
-            return node;
+            next.parent = current;
+            return next;
         }
         
         return null;
@@ -107,26 +97,15 @@ public class Dijkstra {
                 break;
             }
             
-            //check neighbours
-            //ortogonal
-            //up         
-            openNodes.insert(checkNeighbour(current, 0, -1));
-            //down
-            openNodes.insert(checkNeighbour(current, 0, 1));
-            //right
-            openNodes.insert(checkNeighbour(current, 1, 0));
-            //left
-            openNodes.insert(checkNeighbour(current, -1, 0));
-            
-            //diagonal
-            //up-right
-            openNodes.insert(checkNeighbour(current, 1, -1));
-            //up-left
-            openNodes.insert(checkNeighbour(current, -1, -1));
-            //down-right
-            openNodes.insert(checkNeighbour(current, 1, 1));
-            //down-left
-            openNodes.insert(checkNeighbour(current, -1, 1));
+            //check neighbours 
+            openNodes.insert(checkNeighbour(current,  0, -1)); //up
+            openNodes.insert(checkNeighbour(current,  0,  1)); //down
+            openNodes.insert(checkNeighbour(current,  1,  0)); //right  
+            openNodes.insert(checkNeighbour(current, -1,  0)); //left
+            openNodes.insert(checkNeighbour(current,  1, -1)); //top-right
+            openNodes.insert(checkNeighbour(current, -1, -1)); //top-left
+            openNodes.insert(checkNeighbour(current,  1,  1)); //bottom-right
+            openNodes.insert(checkNeighbour(current, -1,  1)); //bottom-left
             
         }
         updatePath(goal);

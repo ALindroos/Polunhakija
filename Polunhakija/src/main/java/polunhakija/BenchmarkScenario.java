@@ -6,7 +6,6 @@
 package polunhakija;
 
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
