@@ -2,7 +2,7 @@
 package polunhakija;
 
 /**
- * custom implementaion of minimum binary heap for Nodes
+ * custom implementation of minimum binary heap for Nodes
  * uses node distance as comparison factor
  *
  */
@@ -48,18 +48,18 @@ public class BinaryHeap {
         
         if (right <= heapSize) {
             
-            if (heap[left].distance < heap[right].distance) {
+            if (heap[left].priority < heap[right].priority) {
                 min = left;
             } else {
                 min = right;
             }
             
-            if (heap[i].distance > heap[min].distance) {
+            if (heap[i].priority > heap[min].priority) {
                 swap(i, min);
                 heapify(min);
             }
             
-        } else if (left == heapSize && heap[i].distance > heap[left].distance) {
+        } else if (left == heapSize && heap[i].priority > heap[left].priority) {
             swap(i,left);
         }
           
@@ -85,7 +85,7 @@ public class BinaryHeap {
         heapSize = heapSize + 1;
         int i = heapSize;
         
-        while(i > 1 && heap[parent(i)].distance > node.distance) {
+        while(i > 1 && heap[parent(i)].priority > node.priority) {
             heap[i] = heap[parent(i)];
             i = parent(i);
         }
@@ -107,7 +107,7 @@ public class BinaryHeap {
     public void testPrint() {
         System.out.println("heapSize: " + heapSize);
         for (int i = 1; i <= heapSize; i++) {
-            System.out.println(heap[i].distance);
+            System.out.println(heap[i].priority);
         }
         System.out.println("---");
     }

@@ -9,10 +9,15 @@ public class Dijkstra {
     
     private double pathL;
     private Node[][] map;
+    private long runTime;
     
     
     public double getPathL() {
         return pathL;
+    }
+    
+    public long getRunTime() {
+        return runTime;
     }
     
     /**
@@ -52,6 +57,7 @@ public class Dijkstra {
             } else {
                 next.distance = current.distance + Math.sqrt(2);
             }
+            next.priority = next.distance;
             
             next.parent = current;
             return next;
@@ -86,6 +92,7 @@ public class Dijkstra {
         start.distance = 0;
         openNodes.insert(start);
         
+        long aTime = System.currentTimeMillis();
         while (!openNodes.isEmpty()) {
             Node current = openNodes.remove();            
             pathL = current.distance;
@@ -108,6 +115,9 @@ public class Dijkstra {
             openNodes.insert(checkNeighbour(current, -1,  1)); //bottom-left
             
         }
+        long bTime = System.currentTimeMillis();
+        runTime = bTime - aTime;
+        
         updatePath(goal);
         return pathL;
         

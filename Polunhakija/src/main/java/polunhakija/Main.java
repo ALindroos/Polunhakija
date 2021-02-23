@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
         
         
+        
         UI ui = new UI();
         ui.run();
         
@@ -27,9 +28,9 @@ public class Main {
         Node[][] map1 = mapLoader.loadMap(mapName);
         Node[][] map2 = mapLoader.loadMap(mapName);
  
-        Node start = new Node(467, 252);
-        Node goal = new Node(450, 264);
-        
+        Node start = new Node(328, 235);
+        Node goal = new Node(352, 187);
+       
         
         Dijkstra dijkstra = new Dijkstra();
         double d = dijkstra.findPath(map1, start, goal);
@@ -52,7 +53,8 @@ public class Main {
         //visual
         
         
-        GridCanvas canvas = new GridCanvas(map1.length, map1[0].length);
+        GridCanvas canvas = new GridCanvas();
+        canvas.changeSize(map1.length, map1[0].length);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -61,8 +63,8 @@ public class Main {
         frame.pack();
         canvas.updateState(map2);
         canvas.repaint();
-        
         */
+        
         
         
         

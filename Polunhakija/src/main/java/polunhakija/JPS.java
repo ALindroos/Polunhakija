@@ -12,38 +12,13 @@ public class JPS {
     private BinaryHeap openNodes;
     private Node goal;
     private boolean earlyExit;
+    private long runTime;
     
-    public void printState() {
-        for (int y=0; y<map[0].length; y++) {
-            for (int x=0; x<map.length; x++) {
-                
-                if (map[x][y].wall) {
-                    System.out.print("&");
-                    continue;
-                    
-                }
-                if (map[x][y].path) {
-                    System.out.print("P");
-                    continue;
-                }
-                
-                if (map[x][y].jmp) {
-                    System.out.print("J");
-                    continue;
-                } 
-                
-                if (map[x][y].visited) {
-                    System.out.print("v");
-                    continue;
-                }
-                System.out.print(".");            
-            }
-            System.out.println();
-        }
-        System.out.println("Path: " + pathL );       
+    public long getRunTime() {
+        return runTime;
     }
     
-
+    
     /**
      * Calculate diagonal distance between 2 nodes
      * @param a first node
@@ -88,12 +63,20 @@ public class JPS {
             return node;
         }
         
+        //to avoid cutting corners, if a node has wall diagonally behind it,
+        //but is open from sides it is considered a jump node
+        if ( (!map[node.x][node.y + 1].wall && map[node.x - xDir][node.y+1].wall) ||
+                (!map[node.x][node.y-1].wall && map[node.x - xDir][node.y-1].wall) ){
+            return node;
+        }
+        
+        /* cut corners
         //wall directly next to the node, but diagonally forward node is open next
         //to it, so the node has forced neighbour and needs to be examined later
         if ( (map[node.x][node.y + 1].wall && !map[next.x][next.y + 1].wall) ||
                 (map[node.x][node.y - 1].wall && !map[next.x][next.y - 1].wall) ) {
             return node;
-        }
+        }*/
         
         //recursively iterate on the row
         return scanPathHor(next, xDir);
@@ -113,6 +96,7 @@ public class JPS {
         
         Node next = map[node.x][node.y + yDir];
         node.visited = true;
+        
         node.distance = map[node.x][node.y - yDir].distance + node.cost;
         
         if (node.x == goal.x && node.y == goal.y) {
@@ -123,14 +107,26 @@ public class JPS {
             return null;
         }
         
+        
         if (next.x == goal.x && next.y == goal.y) {
             return node;
         }
         
+        
+        //to avoid cutting corners, if a node has wall diagonally behind it,
+        //but is open from sides it is considered a jump node
+        if ( (!map[node.x + 1][node.y].wall && map[node.x +1][node.y - yDir].wall) ||
+                (!map[node.x - 1][node.y].wall && map[node.x - 1][node.y - yDir].wall) ){
+            return node;
+        }
+        
+        
+        /* cut corners
         if ( (map[node.x + 1][node.y].wall && !map[next.x + 1][next.y].wall) ||
                 (map[node.x - 1][node.y].wall && !map[next.x - 1][next.y].wall) ) {
             return node;
-        }
+        }*/
+        
         return scanPathVer(next, yDir);
     }
     
@@ -147,7 +143,7 @@ public class JPS {
         current.jmp = true;
         found.jmp = true;
         found.parent = current;
-        found.distance = found.distance + diagDis(found, goal);
+        found.priority = found.distance + diagDis(found, goal);
         openNodes.insert(found);
     }
     
@@ -243,11 +239,15 @@ public class JPS {
         openNodes.insert(start);
         earlyExit = false;
         
+        
+        long aTime = System.currentTimeMillis();
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
-            examineNode(current, 0, 0);
-            
+            examineNode(current, 0, 0);  
         }
+        long bTime = System.currentTimeMillis();
+        runTime = bTime - aTime;
+        
   
         return calculatePath();
     }   

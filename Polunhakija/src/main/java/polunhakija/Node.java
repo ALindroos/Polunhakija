@@ -11,6 +11,7 @@ public class Node {
     int x;
     int y;
     double distance;
+    double priority;
     Node parent;
     boolean visited;
     boolean path;
