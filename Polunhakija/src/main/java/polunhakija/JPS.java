@@ -233,6 +233,16 @@ public class JPS {
         return pathL;
     }
     
+    public void drawPath() {
+        Node node = map[goal.x][goal.y];
+        while (node.parent != null) {
+            
+            
+        }
+    }
+    
+    
+    
     /**
      * Finds shortest path on the given graph between start and goal using
      * jump point search
@@ -263,13 +273,14 @@ public class JPS {
         
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
-            examineNode(current, 0, 0);  
+            examineNode(current, 0, 0);
         }
+        pathL = calculatePath();
         
         Instant b = Instant.now();
         runTime = Duration.between(a, b).getNano() / 1000000;
         
   
-        return calculatePath();
+        return pathL;
     }   
 }

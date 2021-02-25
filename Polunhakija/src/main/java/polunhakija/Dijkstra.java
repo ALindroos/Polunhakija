@@ -119,11 +119,11 @@ public class Dijkstra {
             openNodes.insert(checkNeighbour(current, -1,  1)); //bottom-left
             
         }
-        
+        updatePath(goal);
         Instant b = Instant.now();
         runTime = Duration.between(a, b).getNano() / 1000000;
         
-        updatePath(goal);
+        
         return pathL;
         
     } 

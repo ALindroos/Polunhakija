@@ -16,7 +16,7 @@ public class Visualizer {
         canvas.repaint();
     }
     
-    public void setUp(int width, int height) {  
+    public void setUp(int width, int height) {         
         canvas = new GridCanvas();
         canvas.changeSize(width, height);
         JFrame frame = new JFrame();

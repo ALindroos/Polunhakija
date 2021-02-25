@@ -4,6 +4,7 @@ Tietorakenteet ja algoritmit harjoitustyö, Helsingin Yliopisto
 
 ## Dokumentaatio
 * [Määrittelydokumentti](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/maarittely.md)
+* [Käyttöohje](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/kayttohje.md)
 
 ### Viikkoraportit
 * [Viikko 1](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko1.md)
@@ -11,3 +12,4 @@ Tietorakenteet ja algoritmit harjoitustyö, Helsingin Yliopisto
 * [Viikko 3](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko3.md)
 * [Viikko 4](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko4.md)
 * [Viikko 5](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko5.md)
+* [Viikko 6](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko6.md)
