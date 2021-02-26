@@ -13,9 +13,10 @@ Pidemmillä reiteillä Dijkstra toimii keskimäärin ajassa ~30ms, kun taas JPS 
 
 JPS ei varsinaisesti takaa että se löytää lyhyimmän reitin, mutta kun on näin pitkälle päästy niin tekee mieli vielä yrittää löytää keinoa saada sitä toimimaan tarkemmin. Heurestiikka vaikuttaa tällä hetkellä asialta jossa on eniten mahdollisuuksia tehdä parannuksia.
 
-Ohjelmassa nyt käyttöliittymä perustoiminnoille, kuten Scenarioiden testaamiselle ja valinnaisen reitin visualisoinnille. 
+Ohjelmassa nyt käyttöliittymä perustoiminnoille, kuten Scenarioiden testaamiselle ja valinnaisen reitin visualisoinnille molemmilla algoritmeilla.
 
 ## Kohdattuja ongelmia
+Nyt algoritmit on toteutettu niin että ne päivittävät syötteenä saamaansa verkkoa sitä läpikäydessään, mikä teki algoritmien toteutuksesta yksinkertaisempaa, mutta haittapuolena on että suorituskykyvertailuissa ja muissa menee turhaa aikaa, karttojen uudelleen lataamiseen. Tämän korjaaminen vaatisi jonkin verran refaktorointia.
 
 
 ## Uutta opittua
