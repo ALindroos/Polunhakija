@@ -235,10 +235,33 @@ public class JPS {
     
     public void drawPath() {
         Node node = map[goal.x][goal.y];
-        while (node.parent != null) {
+        Node parent = node.parent;
+        while (parent != null) {
             
+            if (!node.jmp); {
+                node.path = true;
+            }
             
+            if (diagDis(node, parent) > Math.sqrt(2)) {
+                if (node.x - parent.x == 0) {
+                    if (node.y - parent.y < 0) {
+                        node = map[node.x][node.y + 1];
+                    } else {
+                        node = map[node.x][node.y - 1];
+                    }
+                } else {
+                    if (node.x - parent.x < 0) {
+                        node = map[node.x + 1][node.y];
+                    } else {
+                        node = map[node.x - 1][node.y];
+                    }
+                }
+            } else {
+                node = parent;
+                parent = node.parent;
+            }  
         }
+        map[goal.x][goal.y].terminal = true;
     }
     
     
@@ -280,7 +303,8 @@ public class JPS {
         Instant b = Instant.now();
         runTime = Duration.between(a, b).getNano() / 1000000;
         
-  
+        drawPath();
+        
         return pathL;
     }   
 }

@@ -18,6 +18,7 @@ public class Node {
     boolean wall;
     int cost;
     boolean jmp;
+    boolean terminal;
     
     
     /**

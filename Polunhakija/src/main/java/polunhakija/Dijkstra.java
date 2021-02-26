@@ -75,6 +75,7 @@ public class Dijkstra {
             map[node.x][node.y].path = true;
             node = node.parent;
         }  
+        map[goal.x][goal.y].terminal = true;
     }
     
     /**
