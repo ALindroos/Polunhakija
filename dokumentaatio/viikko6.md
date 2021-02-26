@@ -1,6 +1,6 @@
 # Viikkoraportti 6
 
-Työaika: ~4t
+Työaika: ~10t
 
 
 ## Viikon edistys
