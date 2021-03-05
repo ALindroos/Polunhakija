@@ -1,6 +1,7 @@
 # Polunhakija
 
-Tietorakenteet ja algoritmit harjoitustyö, Helsingin Yliopisto
+Tietorakenteet ja algoritmit harjoitustyö, Helsingin Yliopisto.
+Toteutettu ja vertailtu polunhakualgoritmeja Dijkstra & Jump point Search
 
 ## Dokumentaatio
 * [Määrittelydokumentti](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/maarittely.md)

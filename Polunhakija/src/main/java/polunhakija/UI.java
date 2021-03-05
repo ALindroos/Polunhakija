@@ -38,41 +38,9 @@ public class UI {
     }
     
     private void visualize() {
-        int startX;
-        int startY;
-        int goalX;
-        int goalY;
-        
-        System.out.println("Give starting x-coordinate:");
-        startX = scanner.nextInt();
-        System.out.println("Starting y-coordinate");
-        startY = scanner.nextInt();
-        System.out.println("Goal x-coordinate");
-        goalX = scanner.nextInt();
-        System.out.println("Goal y-coordinate");
-        goalY = scanner.nextInt();
-        
-        Node start = new Node(startX, startY);
-        Node goal = new Node(goalX, goalY);
-        
-        MapLoader maploader = new MapLoader();
-        Node[][] mapD = maploader.loadMap(mapName);
-        Node[][] mapJ = maploader.loadMap(mapName);
-        
-        Dijkstra dijkstra = new Dijkstra();
-        JPS jps = new JPS();
-        
-        dijkstra.findPath(mapD, start, goal);
-        jps.findPath(mapJ, start, goal);
-        
         Visualizer visualizer = new Visualizer();
-        visualizer.setUp(mapD, mapJ);
-        visualizer.update(mapD);
-        
-        
-        
-        
-        
+        visualizer.setUp(mapName);
+        visualizer.update(visualizer.getMap());
     }
     
     
