@@ -1,5 +1,7 @@
 package polunhakija;
 
+import javax.swing.JFrame;
+
 
 public class Main {
     
@@ -25,8 +27,8 @@ public class Main {
         Node[][] map1 = mapLoader.loadMap(mapName);
         Node[][] map2 = mapLoader.loadMap(mapName);
  
-        Node start = new Node(328, 235);
-        Node goal = new Node(352, 187);
+        Node start = new Node(415, 373);
+        Node goal = new Node(394, 342);
        
         
         Dijkstra dijkstra = new Dijkstra();

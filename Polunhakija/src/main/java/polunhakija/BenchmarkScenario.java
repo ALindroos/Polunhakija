@@ -26,6 +26,9 @@ public class BenchmarkScenario {
 
             int i = 0;
             int correct = 0;
+            double dijkstraTotalTime = 0;
+            double jpsTotalTime = 0;
+            double threshold = 0.01;
             
             while (scanner.hasNextLine()) {
                 
@@ -56,8 +59,6 @@ public class BenchmarkScenario {
                 double j = jps.findPath(mapJ, start, goal);
                 
                 
-                double threshold = optimal / 100;
-                
                 if (Math.abs(optimal - d) < threshold && Math.abs(optimal - j) < threshold) {
                     //System.out.println("Test " + i +  " OK!");
                     //System.out.println("Length: " + optimal);
@@ -73,10 +74,13 @@ public class BenchmarkScenario {
                     System.out.println("-------------------");
                 }
                 
+                
+                
+                
                 i++;
             }
             
-            System.out.println(correct + "/" + i + " tests succesful");
+            System.out.println(correct + "/" + (i-1) + " tests succesful");
             
             
         } catch (Exception e) {

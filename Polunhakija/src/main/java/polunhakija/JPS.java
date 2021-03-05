@@ -159,11 +159,21 @@ public class JPS {
         if (found == null) {
             return;
         }
+        
         current.jmp = true;
         found.jmp = true;
         found.parent = current;
-        found.priority = found.distance + diagDis(found, goal);
+        found.priority = found.distance + heuristic(found, goal);
         openNodes.insert(found);
+    }
+    
+    private boolean checkCorners(Node current, int xDir, int yDir) {
+        
+        if(map[current.x + xDir][current.y].wall || 
+                map[current.x][current.y + yDir].wall) {
+            return true;
+        }
+        return false;
     }
     
     
@@ -176,7 +186,7 @@ public class JPS {
     public void moveDiag(Node node, int xDir, int yDir) {
         Node target = map[node.x + xDir][node.y + yDir];
         
-        if (!target.wall && !target.visited) {
+        if (!target.wall && !target.visited && !checkCorners(node, xDir, yDir)) {
             target.parent = node;
             target.distance = node.distance + Math.sqrt(2);
             examineNode(target, xDir, yDir);
@@ -226,11 +236,17 @@ public class JPS {
         pathL = 0;
         Node node = map[goal.x][goal.y];
         while (node.parent != null) {
+            /*
+            System.out.println(node.x + ":" + node.y);
+            System.out.println(node.distance);
+            System.out.println("-------------");
+            */
+            
             pathL = pathL + diagDis(node, node.parent);
             map[node.x][node.y].path = true;
             node = node.parent;          
         }
-        return pathL;
+        return map[goal.x][goal.y].distance;
     }
     
     public void drawPath() {
@@ -261,7 +277,6 @@ public class JPS {
                 parent = node.parent;
             }  
         }
-        map[goal.x][goal.y].terminal = true;
     }
     
     
@@ -282,8 +297,8 @@ public class JPS {
         openNodes = new BinaryHeap(width_x * height_y);
         
         
-        map[start.x][start.y].path = true;
-        map[goal.x][goal.y].path = true;
+        map[start.x][start.y].terminal = true;
+        map[goal.x][goal.y].terminal = true;
         
         start.distance = 0;
         map[start.x][start.y].distance = 0;
@@ -296,6 +311,9 @@ public class JPS {
         
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
+            if (current.x == goal.x && current.y == goal.y) {
+                break;
+            }
             examineNode(current, 0, 0);
         }
         pathL = calculatePath();

@@ -69,13 +69,14 @@ public class Dijkstra {
         return null;
     }
     
-    private void updatePath(Node goal) {
+    private void updatePath(Node goal, Node start) {
         Node node = map[goal.x][goal.y];
         while (node.parent != null) {
             map[node.x][node.y].path = true;
             node = node.parent;
         }  
         map[goal.x][goal.y].terminal = true;
+        map[start.x][start.y].terminal = true;
     }
     
     /**
@@ -101,10 +102,9 @@ public class Dijkstra {
         while (!openNodes.isEmpty()) {
             Node current = openNodes.remove();            
             pathL = current.distance;
-            current.visited = true;  
+            current.visited = true;             
             
             //early exit
-            
             if (current.x == goal.x && current.y == goal.y) {
                 break;
             }
@@ -120,7 +120,7 @@ public class Dijkstra {
             openNodes.insert(checkNeighbour(current, -1,  1)); //bottom-left
             
         }
-        updatePath(goal);
+        updatePath(goal, start);
         Instant b = Instant.now();
         runTime = Duration.between(a, b).getNano() / 1000000;
         
