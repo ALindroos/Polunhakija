@@ -13,3 +13,4 @@ Tietorakenteet ja algoritmit harjoitustyö, Helsingin Yliopisto
 * [Viikko 4](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko4.md)
 * [Viikko 5](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko5.md)
 * [Viikko 6](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko6.md)
+* [Viikko 7](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko7.md)

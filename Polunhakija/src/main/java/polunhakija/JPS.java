@@ -163,7 +163,7 @@ public class JPS {
         current.jmp = true;
         found.jmp = true;
         found.parent = current;
-        found.priority = found.distance + heuristic(found, goal);
+        found.priority = found.distance + diagDis(found, goal);
         openNodes.insert(found);
     }
     
