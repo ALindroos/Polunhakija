@@ -1,15 +1,14 @@
-# Viikkoraportti 6
+# Viikkoraportti 7
 
-Työaika: ~6t
+Työaika: ~10t
 
 
 ## Viikon edistys
 Suorituskyky vertailuja tehty ja dokumentaatiota paranneltu.
-
-## Uutta opittua
+Visualisointi parempi, reittiä voi vaihtaa vapaasti ja samoin näkymää algoritmien välillä.
 
 
 ## Seuraavan viikon askeleet
-* Valmistautuminen
+* Valmistautuminen demoon
 * Dokumentaatiota kuntoon
 * Testejä ja hiomista
