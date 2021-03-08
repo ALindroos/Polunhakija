@@ -23,6 +23,12 @@ public class Visualizer {
     private double pathJ;
     private double pathD;
     
+    
+    /**
+     * updates the screen and shows the specified map
+     * also updates path display
+     * @param map 
+     */
     public void update(Node[][] map) {
         if (swap) {
             pathLength.setText("path: " + pathD);
@@ -33,6 +39,11 @@ public class Visualizer {
         canvas.repaint();
     }
     
+    /**
+     * returns which map is now supposed to be displayed, decided by the swap parameter
+     * true = Dijkstra, false = JPS
+     * @return 
+     */
     public Node[][] getMap() {
         if (swap) {
             return mapD;
@@ -40,6 +51,10 @@ public class Visualizer {
         return mapJ;
     }
     
+    /**
+     * sets up the screen and its components
+     * @param mapName 
+     */
     public void setUp(String mapName) {
         MapLoader mapLoader = new MapLoader();
         
@@ -110,7 +125,7 @@ public class Visualizer {
             }
         });
         
-        pathLength = new JLabel("Test");
+        pathLength = new JLabel();
         pathLength.setBounds(mapD.length * 2 - 140, 10, 120, 20);
         
         

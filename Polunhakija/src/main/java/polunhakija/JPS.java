@@ -10,12 +10,12 @@ import java.time.Instant;
  */
 public class JPS {
     
-    private double pathL;
     private Node[][] map;
     private BinaryHeap openNodes;
     private Node goal;
     private boolean earlyExit;
     private double runTime;
+    
     
     public double getRunTime() {
         return runTime;
@@ -167,6 +167,14 @@ public class JPS {
         openNodes.insert(found);
     }
     
+    /**
+     * checks that moving to a new node in the given direction doesn't cut corners
+     * i.e node neighbouring two diagonal nodes is wall 
+     * @param current current node
+     * @param xDir movement in x-coords
+     * @param yDir movement in y-coords
+     * @return return true if cuts a corner, otherwise false
+     */
     private boolean checkCorners(Node current, int xDir, int yDir) {
         
         if(map[current.x + xDir][current.y].wall || 
@@ -232,24 +240,11 @@ public class JPS {
         }
     }
     
-    private double calculatePath() {
-        pathL = 0;
-        Node node = map[goal.x][goal.y];
-        while (node.parent != null) {
-            /*
-            System.out.println(node.x + ":" + node.y);
-            System.out.println(node.distance);
-            System.out.println("-------------");
-            */
-            
-            pathL = pathL + diagDis(node, node.parent);
-            map[node.x][node.y].path = true;
-            node = node.parent;          
-        }
-        return map[goal.x][goal.y].distance;
-    }
-    
-    public void drawPath() {
+    /**
+     * draws all the nodes in the path to map
+     * as jump points skip movement in ortogonal lines
+     */
+    public void drawPath(Node start) {
         Node node = map[goal.x][goal.y];
         Node parent = node.parent;
         while (parent != null) {
@@ -277,6 +272,8 @@ public class JPS {
                 parent = node.parent;
             }  
         }
+        map[start.x][start.y].terminal = true;
+        map[goal.x][goal.y].terminal = true;
     }
     
     
@@ -291,23 +288,20 @@ public class JPS {
      */
     public double findPath(Node[][] map, Node start, Node goal) {
         
+        Instant a = Instant.now();
+        
         this.map = map;
         int width_x = map.length;
         int height_y = map[0].length;
         openNodes = new BinaryHeap(width_x * height_y);
         
         
-        map[start.x][start.y].terminal = true;
-        map[goal.x][goal.y].terminal = true;
-        
         start.distance = 0;
         map[start.x][start.y].distance = 0;
         this.goal = goal;
         openNodes.insert(start);
         earlyExit = false;
-        
-        
-        Instant a = Instant.now();
+           
         
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
@@ -316,12 +310,12 @@ public class JPS {
             }
             examineNode(current, 0, 0);
         }
-        pathL = calculatePath();
+        double pathL = map[goal.x][goal.y].distance;
         
         Instant b = Instant.now();
         runTime = Duration.between(a, b).getNano() / 1000000;
         
-        drawPath();
+        drawPath(start);
         
         return pathL;
     }   

@@ -9,8 +9,8 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 /**
- *
- * @author lindradi
+ * runs benchmarks for the map specified in the .scen file
+ * 
  */
 public class BenchmarkScenario {
     

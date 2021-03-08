@@ -4,8 +4,8 @@ package polunhakija;
 import java.util.Scanner;
 
 /**
- *
- * @author lindradi
+ * Commandline UI for the application
+ * 
  */
 public class UI {
     
@@ -31,12 +31,19 @@ public class UI {
         mapName = scanner.nextLine();
     }
     
+    /**
+     * runs the benchmarks specified for the map
+     */
     private void runBenchmark() {
         System.out.println("-----------");
         BenchmarkScenario benchmark = new BenchmarkScenario();
         benchmark.testScenario(mapName, 0, 500);
     }
     
+    
+    /**
+     * opens a Window for visualising the map + path
+     */
     private void visualize() {
         Visualizer visualizer = new Visualizer();
         visualizer.setUp(mapName);

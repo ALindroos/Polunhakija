@@ -69,6 +69,11 @@ public class Dijkstra {
         return null;
     }
     
+    /**
+     * updates the shortest path to the map, so it can be drawn
+     * @param goal
+     * @param start 
+     */
     private void updatePath(Node goal, Node start) {
         Node node = map[goal.x][goal.y];
         while (node.parent != null) {
@@ -88,6 +93,8 @@ public class Dijkstra {
      */
     public double findPath(Node[][] map, Node start, Node goal) {
         
+        Instant a = Instant.now();
+        
         this.map = map;
         int width_x = map.length;
         int height_y = map[0].length;
@@ -97,7 +104,7 @@ public class Dijkstra {
         start.distance = 0;
         openNodes.insert(start);
         
-        Instant a = Instant.now();
+        
         
         while (!openNodes.isEmpty()) {
             Node current = openNodes.remove();            
@@ -120,10 +127,11 @@ public class Dijkstra {
             openNodes.insert(checkNeighbour(current, -1,  1)); //bottom-left
             
         }
-        updatePath(goal, start);
+        
         Instant b = Instant.now();
         runTime = Duration.between(a, b).getNano() / 1000000;
         
+        updatePath(goal, start);
         
         return pathL;
         
