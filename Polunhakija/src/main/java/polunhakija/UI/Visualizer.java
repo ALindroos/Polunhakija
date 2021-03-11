@@ -1,5 +1,5 @@
 
-package polunhakija;
+package polunhakija.UI;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -8,6 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import polunhakija.Dijkstra;
+import polunhakija.JPS;
+import polunhakija.utils.MapLoader;
+import polunhakija.Node;
 
 /**
  *
@@ -22,6 +26,7 @@ public class Visualizer {
     private JLabel pathLength;
     private double pathJ;
     private double pathD;
+    private int size;
     
     
     /**
@@ -62,12 +67,14 @@ public class Visualizer {
         mapJ = mapLoader.loadMap(mapName);
         Dijkstra dijkstra = new Dijkstra();
         JPS jps = new JPS();
-        
-        
         swap = true;
         
+        canvas = new GridCanvas();
+        canvas.changeSize(mapD.length + 50, mapD[0].length);
+        size = canvas.getSizeMul();
+        
         JButton changeAlgo = new JButton("change");
-        changeAlgo.setBounds(mapD.length * 2, 0, 100, 60);
+        changeAlgo.setBounds(mapD.length * size, 0, 100, 60);
         changeAlgo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 swap = !swap;
@@ -87,14 +94,14 @@ public class Visualizer {
         JTextField goalY = new JTextField();  
         
         
-        startX.setBounds(mapD.length * 2,      100, 50, 30);
-        startY.setBounds(mapD.length * 2 + 50, 100, 50, 30);
-        goalX.setBounds(mapD.length * 2,      130, 50, 30);
-        goalY.setBounds(mapD.length * 2 + 50, 130, 50, 30);
+        startX.setBounds(mapD.length * size,      100, 50, 30);
+        startY.setBounds(mapD.length * size + 50, 100, 50, 30);
+        goalX.setBounds(mapD.length * size,      130, 50, 30);
+        goalY.setBounds(mapD.length * size + 50, 130, 50, 30);
         
         
         JButton changePath = new JButton("find path");
-        changePath.setBounds(mapD.length * 2, 160, 100, 50);
+        changePath.setBounds(mapD.length * size, 160, 100, 50);
         changePath.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
@@ -115,7 +122,7 @@ public class Visualizer {
         });
         
         JButton clearCoords = new JButton("Clear");
-        clearCoords.setBounds(mapD.length * 2, 210, 100, 50);
+        clearCoords.setBounds(mapD.length * size, 210, 100, 50);
         clearCoords.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 startX.setText("");
@@ -125,14 +132,12 @@ public class Visualizer {
             }
         });
         
+            
+        
         pathLength = new JLabel();
-        pathLength.setBounds(mapD.length * 2 - 140, 10, 120, 20);
+        pathLength.setBounds(mapD.length * size - 140, 10, 120, 20);
         
         
-        
-        
-        canvas = new GridCanvas();
-        canvas.changeSize(mapD.length + 50, mapD[0].length);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);

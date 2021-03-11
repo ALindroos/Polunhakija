@@ -8,17 +8,17 @@ package polunhakija;
 
 public class Node {
     
-    int x;
-    int y;
-    double distance;
-    double priority;
-    Node parent;
-    boolean visited;
-    boolean path;
-    boolean wall;
-    int cost;
-    boolean jmp;
-    boolean terminal;
+    public int x;
+    public int y;
+    public double distance;
+    public double priority;
+    public Node parent;
+    public boolean visited;
+    public boolean path;
+    public boolean wall;
+    public int cost;
+    public boolean jmp;
+    public boolean terminal;
     
     
     /**

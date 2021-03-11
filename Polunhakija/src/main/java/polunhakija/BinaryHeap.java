@@ -101,15 +101,5 @@ public class BinaryHeap {
         heapSize = heapSize - 1;
         heapify(1);
         return removed;
-    }
-    
-    
-    public void testPrint() {
-        System.out.println("heapSize: " + heapSize);
-        for (int i = 1; i <= heapSize; i++) {
-            System.out.println(heap[i].priority);
-        }
-        System.out.println("---");
-    }
-    
+    } 
 }

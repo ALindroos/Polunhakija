@@ -1,14 +1,19 @@
 
-package polunhakija;
+package polunhakija.UI;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import polunhakija.Node;
 
 public class GridCanvas extends Canvas {
     
     private Node[][] map;
     private int size = 2;
+    
+    public int getSizeMul() {
+        return(size);
+    }
     
     public void changeSize(int x, int y) {
         setSize(x * size, y * size);

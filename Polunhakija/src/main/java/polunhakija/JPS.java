@@ -13,7 +13,6 @@ public class JPS {
     private Node[][] map;
     private BinaryHeap openNodes;
     private Node goal;
-    private boolean earlyExit;
     private double runTime;
     
     
@@ -23,7 +22,7 @@ public class JPS {
     
     
     /**
-     * Calculate diagonal distance between 2 nodes
+     * Calculate euclidian distance between 2 nodes
      * @param a first node
      * @param b 2nd node
      * @return 
@@ -211,12 +210,7 @@ public class JPS {
     private void examineNode(Node node, int xDir, int yDir) {
         node.visited = true;
         
-        //early exit
-        if (earlyExit) {
-            return;
-        }
         if (node.x == goal.x && node.y == goal.y) {
-            earlyExit = true;
             return;
         }
 
@@ -299,15 +293,10 @@ public class JPS {
         start.distance = 0;
         map[start.x][start.y].distance = 0;
         this.goal = goal;
-        openNodes.insert(start);
-        earlyExit = false;
-           
+        openNodes.insert(start);           
         
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
-            if (current.x == goal.x && current.y == goal.y) {
-                break;
-            }
             examineNode(current, 0, 0);
         }
         double pathL = map[goal.x][goal.y].distance;

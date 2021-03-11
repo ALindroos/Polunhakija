@@ -41,6 +41,15 @@ jacocoTestReport {
         xml.enabled = true
         html.enabled = true
     }
+    
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude: [
+                            'polunhakija/UI/*',
+                            'polunhakija/utils/*'
+                    ])
+        }))
+    }
 }
 
 check.dependsOn jacocoTestReport

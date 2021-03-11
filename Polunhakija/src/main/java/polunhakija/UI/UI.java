@@ -1,7 +1,8 @@
 
-package polunhakija;
+package polunhakija.UI;
 
 import java.util.Scanner;
+import polunhakija.utils.BenchmarkScenario;
 
 /**
  * Commandline UI for the application

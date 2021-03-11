@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package polunhakija;
+package polunhakija.utils;
 
 import java.nio.file.Paths;
 import java.util.Scanner;
+import polunhakija.Dijkstra;
+import polunhakija.JPS;
+import polunhakija.Node;
 
 /**
  * runs benchmarks for the map specified in the .scen file
