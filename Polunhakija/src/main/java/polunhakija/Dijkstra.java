@@ -13,12 +13,8 @@ public class Dijkstra {
     private double pathL;
     private Node[][] map;
     private double runTime;
-    
-    
-    public double getPathL() {
-        return pathL;
-    }
-    
+     
+
     public double getRunTime() {
         return runTime;
     }
@@ -51,12 +47,12 @@ public class Dijkstra {
         Node next = map[current.x + xDir][current.y + yDir];
         
         if (!next.visited && !next.wall &&
-                next.distance > current.distance + next.cost &&
+                next.distance > current.distance + 1 &&
                 !checkCorners(current, xDir, yDir)) {
             
             //check if diagonal and adjust distance
             if (Math.abs(xDir) + Math.abs(yDir) == 1) {
-                next.distance = current.distance + next.cost;
+                next.distance = current.distance + 1;
             } else {
                 next.distance = current.distance + Math.sqrt(2);
             }
@@ -103,8 +99,6 @@ public class Dijkstra {
         
         start.distance = 0;
         openNodes.insert(start);
-        
-        
         
         while (!openNodes.isEmpty()) {
             Node current = openNodes.remove();            

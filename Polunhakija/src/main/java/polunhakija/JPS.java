@@ -32,23 +32,7 @@ public class JPS {
         double dy = Math.abs(a.y - b.y);
         return Math.sqrt((dx * dx) + (dy * dy));
     }
-    
-    /**
-     * measure a diagonal heuristic between 2 nodes
-     * at the moment works worse than just pure diagonal Distance between nodes
-     * @param a
-     * @param b
-     * @return 
-     */
-    private double heuristic(Node a, Node b) {
-        double D = a.cost;
-        double D2 = Math.sqrt(2);
-        
-        double dx = Math.abs(a.x - b.x );
-        double dy = Math.abs(a.y - b.y);
-        return D * (dx + dy) + (D2 - 2 * D) * Math.min(dx, dy); 
-    }
-    
+     
     
     /**
      * Scan a row horizontally for empty nodes until it hits either a wall or jump point
@@ -58,6 +42,10 @@ public class JPS {
      */
     private Node scanPathHor(Node node, int xDir) {
         
+        if (node.x == map.length - 1 || node.x == 0) {
+            return null;
+        }
+        
         Node next = map[node.x + xDir][node.y];
         
         if (node.wall || node.visited) {
@@ -65,7 +53,7 @@ public class JPS {
         }
     
         node.visited = true; 
-        node.distance = map[node.x - xDir][node.y].distance + node.cost;
+        node.distance = map[node.x - xDir][node.y].distance + 1;
         
         if (node.x == goal.x && node.y == goal.y) {
             return node;
@@ -107,6 +95,10 @@ public class JPS {
      * @return 
      */
     private Node scanPathVer(Node node, int yDir) {
+        
+        if (node.y == map.length - 1 || node.y == 0) {
+            return null;
+        }
              
         if (node.wall || node.visited) {
             return null;
@@ -115,7 +107,7 @@ public class JPS {
         Node next = map[node.x][node.y + yDir];
         node.visited = true;
         
-        node.distance = map[node.x][node.y - yDir].distance + node.cost;
+        node.distance = map[node.x][node.y - yDir].distance + 1;
         
         if (node.x == goal.x && node.y == goal.y) {
             return node;
