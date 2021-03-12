@@ -52,4 +52,4 @@ JPS max diff in path lenght | 246.75 | 270.89
 
 
 ## Yksikkötestien kattavuus
-![testCoverage](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/testCoverage.png)
+![testCoverage](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/testcoverage.png)
