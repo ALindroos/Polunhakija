@@ -22,7 +22,7 @@ JPS avg. diff in path length (non-optimal cases) | 29.19 | 23.61 | 6.46 | 7.60 |
 JPS max diff in path lenght   | 246.75            | 101.45            | 29.82             | 99.92             | 315.71
 
 
-Vaikka JPS ei takaakan että löydetty reitti on lyhyin mahdollinen, toisin kuin Dijkstran algoritmi, tehdyillä testeillä JPS kuitenkin löytää lyhyimmän mahdollisen reitin keskimäärin noin 80% tapauksista.
+Vaikka JPS:kin tulisi löytää lyhyin mahdollinen reitti kuten Dijkstralla, tehdyillä testeillä voidaan huomata että nykyinen JPS:n toteutus kuitenkin löytää lyhyimmän mahdollisen reitin keskimäärin noin 80% tapauksista.
 Tapauksissa joissa löydetty reitti ei ole optimaalinen, se on keskimäärin 20 askelta pidempi. Tosin ei optimaalisia tuloksia alkaa esiintyä erityisesti suurilla reitin pituuksilla, mikä voidaan huomata huonoimmista tapauksista joissa löydetty reitti voi olla huomattavasti pidempi. Tällaisia tilanteita voi olla mahdollista parantaa tarkemmalla heurestiikkalla.
 Kuitenkin, jos kaikki tapaukset otetaan huomioon, on keskimäärin löydetty reitti vain ~4 askelta pidempi.
 
@@ -31,11 +31,11 @@ Tärkeämmin JPS on suoritusnopeudeltaan huomattavasti nopeampi kuin Dijkstran a
 Käytetyistä kartoista voi havaita että JPS on verrattain erityisen tehokas kartoilla jolla on laajoja avoimia alueita. Toisin kuin Dijkstra, JPS:n ei tarvitse laajentuessaan lisätä kaikkia naapureitaan kekoon, vaan voi nopeasti hypätä alueen yli ja löytää kiinnostavia solmuja tutkittavaksi.
 Kartoilla joilla on paljon kapeita käytäviä eivät erot ole niin suuria, sillä näissä tapauksissa Dijkstra voi edetä kohtuullisen tehokkaasti. 
 
-### Heurestiikka
+## Heurestiikka
 Heurestiikalla voi olla mahdollista vielä parantaa JPS:n tehokkuutta.
-Tällä hetkellä parhaimmaksi heurestiikaksi havaitsin kuljetun etäisyyden + nykyisen etäisyyden maalista: `distance + sqrt((dx * dx) + (dy * dy))`
-Toinen testatta heurestiikka on vastaavassa jossa etäisyyttä maaliin on kompensoitu kohtisuorien liikkeiden kannalta:
-`distance + (D * (dx + dy) + (D2 - 2 * D) * min(dx, dy));`, missä D on suoranliikkeen hinta(=1) ja D2 vinon(=sqrt(2)).
+Tällä hetkellä parhaimmaksi heurestiikaksi havaitsin euklidisen etäisyyden `sqrt((dx * dx) + (dy * dy))`
+Toinen testattu heurestiikka on vastaavassa jossa etäisyyttä maaliin on kompensoitu kohtisuorien liikkeiden kannalta:
+`D * (dx + dy) + (D2 - 2 * D) * min(dx, dy);`, missä D on suoranliikkeen hinta(=1) ja D2 vinon(=sqrt(2)).
 
 Erot näiden heurestiikkojen välillä eivät ole suuria, kuten alla olevasta voi huomata, mutta on vielä mahdollista että parempi heurestiikka on olemassa.
 
@@ -50,3 +50,6 @@ JPS avg. diff in path length | 5.32 | 7.08
 JPS max diff in path lenght | 246.75 | 270.89
 
 
+
+## Yksikkötestien kattavuus
+![testCoverage](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/testCoverage.png)

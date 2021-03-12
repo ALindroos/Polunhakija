@@ -96,8 +96,8 @@ public class Visualizer {
         
         startX.setBounds(mapD.length * size,      100, 50, 30);
         startY.setBounds(mapD.length * size + 50, 100, 50, 30);
-        goalX.setBounds(mapD.length * size,      130, 50, 30);
-        goalY.setBounds(mapD.length * size + 50, 130, 50, 30);
+        goalX.setBounds(mapD.length * size,       130, 50, 30);
+        goalY.setBounds(mapD.length * size + 50,  130, 50, 30);
         
         
         JButton changePath = new JButton("find path");

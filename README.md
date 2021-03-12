@@ -5,7 +5,9 @@ Toteutettu ja vertailtu polunhakualgoritmeja Dijkstra & Jump point Search
 
 ## Dokumentaatio
 * [Määrittelydokumentti](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/maarittely.md)
-* [Käyttöohje](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/kayttohje.md)
+* [Käyttöohje](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/kayttoohje.md)
+* [Toteutusdokumentti](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/toteutus.md)
+* [Testausdokumentti](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/testaus.md)
 
 ### Viikkoraportit
 * [Viikko 1](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko1.md)

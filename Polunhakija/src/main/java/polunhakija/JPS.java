@@ -27,7 +27,7 @@ public class JPS {
      * @param b 2nd node
      * @return 
      */
-    private double diagDis(Node a, Node b) {
+    private double eucDis(Node a, Node b) {
         double dx = Math.abs(a.x - b.x);
         double dy = Math.abs(a.y - b.y);
         return Math.sqrt((dx * dx) + (dy * dy));
@@ -154,7 +154,7 @@ public class JPS {
         current.jmp = true;
         found.jmp = true;
         found.parent = current;
-        found.priority = found.distance + diagDis(found, goal);
+        found.priority = found.distance + eucDis(found, goal);
         openNodes.insert(found);
     }
     
@@ -205,8 +205,9 @@ public class JPS {
         if (node.x == goal.x && node.y == goal.y) {
             return;
         }
-
-        //scan all ortogonal lines
+        
+        //scan ortogonal lines in the direction of movement
+        //in case of new jump point expand all directions
         //if any of the scans return node, a jump point is found and it will be
         //added to the openNodes to examine later
         addJumpPoint(scanPathHor(map[node.x + 1][node.y], 1), node);
@@ -229,6 +230,7 @@ public class JPS {
     /**
      * draws all the nodes in the path to map
      * as jump points skip movement in ortogonal lines
+     * @param start starting point of path
      */
     public void drawPath(Node start) {
         Node node = map[goal.x][goal.y];
@@ -239,7 +241,7 @@ public class JPS {
                 node.path = true;
             }
             
-            if (diagDis(node, parent) > Math.sqrt(2)) {
+            if (eucDis(node, parent) > Math.sqrt(2)) {
                 if (node.x - parent.x == 0) {
                     if (node.y - parent.y < 0) {
                         node = map[node.x][node.y + 1];
@@ -261,9 +263,7 @@ public class JPS {
         map[start.x][start.y].terminal = true;
         map[goal.x][goal.y].terminal = true;
     }
-    
-    
-    
+
     /**
      * Finds shortest path on the given graph between start and goal using
      * jump point search

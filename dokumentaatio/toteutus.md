@@ -2,6 +2,27 @@
 
 ## Ohjelman rakenne
 
+```
+polunhakija
+├── UI
+│   ├── UI.java
+│   ├── GridCanvas.java
+│   ├── Visualizer.java
+├── utils
+│   ├── BenchmarkScenario.java
+│   └── MapLoader.java
+├── BinaryHeap.java
+├── Dijkstra.java
+├── Main.java
+├── JPS.java
+└── Node.java
+```
+
+
+UI-luokka sisältää yksinkertaisen komentorivisovelluksen jonka avulla voi ajaa joko testit kartalle, tai avata visualisoinnin kartasta johon voi syöttää koordinaatteja ja näin etsiä ja havainnolistaa reittejä interaktiivisesti.
+
+BinaryHeap on toteutus minimikeosta, Node aputietorakenne verkon solmuille ja algoritmit omissa luokissaan.
+
 ## Minimikeko
 Molemmat algoritmit hyödyntävät toiminnassaan minimikekoa verkon solmuille joita seuraavaksi käsitellään.
 Järjestys kriteerinä toimii etäisyys joko lähtösolmusta tai heurestiikka, niin että pienin arvo on keon päällimmäisenä.
@@ -24,10 +45,24 @@ Pahimmassa tapauksessa, eli jos kaikki solmut joudutaan käymään läpi, saadaa
 
 Tilavaatimus on 0(|V|), mikä on suurin mahdollinen määrä toistoja algoritmin läpikäymiseksi.
 
+Toteutettu Dijkstran algoritmi etenee 8-suuntaa suorat liikkeet arvoltaan 1, vinot sqrt(2).
+Algoritmi ei myöskään leikkaa kulmia, kuten karttatesteissä oletettiin.
+
 ## JPS
 Alustustoimena sama, lähtösolmu lisätään kekoon.
 Toistolauseessa keosta poistetaan ensimmäinen solmu O(log |V|) ja tämä tutkitaan. Tutkiessa ensin skannataan verkosta rivi ja sarake jossa solmu on O(|V|) jonka jälkeen edetään rekursiivesti tutkimaan solmun diagonaaliset naapurit (|V|). Jos matkalla löydetään hyppypiste se lisätään kekoon 0(log |V|). Kun rekursiivinen solmun tutkimus on päättynyt siirrytään seuraavaan keon alkioon. Eli aikavaatimus on 0( (|V|^2) log|V|).
 
 Tilavaatimus on rekursion takia siis (0|V|^2).
 
-## Suorituskyky & Vertailu
+Kuten Dijkstra, JPS etenee 8 suuntaa, hinnat 1 suoraan, sqrt(2) vinoon. JPS ei myöskään leikkaa kulmia.
+
+Toteutettu JPS ei toimi kuitenkaan tällä hetkellä täysin oikein, kuten testeissä huomattiin. Koska algoritmi kuitenkin suorituu annetuista kartoista ja löytää lyhyimmän reitin usein, luulen että ongelma johtuu luultavasti pienistä bugeissa hauen laajentuessa rekursiivisesti. Yksi mahdollinen epäilty ongelmakohta on kun uutta hyppypistettä tutkiessa vierussolmuja ja ei ehkä karsita tarpeeksi. En kuitenkaan ehtinyt korjata ja tutkia tätä vielä tarpeeksi.
+Myös algoritmia tehdessä tulin aluksi väärin ymmärtäneeksi että JPS ei aina toimi optimaalisesti, kun kyseessä oikeasti tarkoitettiin että heurestiiksta riippuen JPS voi olla toimimatta aina optimaalisesti, mutta muuten nopeampi.
+Näin siis testauksessa en aluksi kummemmin ihmetellyt että JPS ei aina toimi optimaalisesti.
+
+Tarkempia testituloksia löytyy [testausdokumenttista.](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/testaus.md)
+
+
+## Parannuksia
+Tämän hetkiset algoritmit olettavat että saatu kartta on suljettu, siis kaikki ulkoisimmat solmut ei-kuljettavia.
+Molemmat algoritmit myös päivittävät saamaansa karttaa käydessään sitä läpi, mikä osittain nopeuttaa hakua, mutta toisaalta tarkoittaa että kartta pitää aina ladata uudestaan tehdessä uutta hakua samalla kartalla.

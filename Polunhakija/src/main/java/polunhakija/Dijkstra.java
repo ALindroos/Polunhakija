@@ -51,10 +51,10 @@ public class Dijkstra {
                 !checkCorners(current, xDir, yDir)) {
             
             //check if diagonal and adjust distance
-            if (Math.abs(xDir) + Math.abs(yDir) == 1) {
+            if (xDir == 0 || yDir == 0) {
                 next.distance = current.distance + 1;
             } else {
-                next.distance = current.distance + Math.sqrt(2);
+                next.distance = current.distance + Math.sqrt(2);;
             }
             next.priority = next.distance;
             
