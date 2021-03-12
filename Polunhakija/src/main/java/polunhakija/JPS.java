@@ -14,6 +14,7 @@ public class JPS {
     private BinaryHeap openNodes;
     private Node goal;
     private double runTime;
+    private boolean earlyExit;
     
     
     public double getRunTime() {
@@ -202,7 +203,13 @@ public class JPS {
     private void examineNode(Node node, int xDir, int yDir) {
         node.visited = true;
         
+        //early exit
+        if (earlyExit) {
+            return;
+        }
+        
         if (node.x == goal.x && node.y == goal.y) {
+            earlyExit = true;
             return;
         }
         
@@ -285,7 +292,8 @@ public class JPS {
         start.distance = 0;
         map[start.x][start.y].distance = 0;
         this.goal = goal;
-        openNodes.insert(start);           
+        openNodes.insert(start);     
+        earlyExit = false;
         
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
