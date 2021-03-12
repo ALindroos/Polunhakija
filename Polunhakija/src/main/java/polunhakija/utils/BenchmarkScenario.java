@@ -31,10 +31,8 @@ public class BenchmarkScenario {
             int correct = 0;
             double dijkstraTotalTime = 0;
             double jpsTotalTime = 0;
-            double jpsPathDiff = 0;
             double optPathTotal = 0;
             double threshold = 0.01;
-            double jpsMaxDiff = 0;
             
             while (scanner.hasNextLine()) {
                 
@@ -66,9 +64,11 @@ public class BenchmarkScenario {
                 
                 
                 if (Math.abs(optimal - d) < threshold && Math.abs(optimal - j) < threshold) {
-                    //System.out.println("Test " + i +  " OK!");
-                    //System.out.println("Length: " + optimal);
-                    //System.out.println("-----------");
+                    System.out.println("Test " + i +  " OK!");
+                    System.out.println("Length: " + optimal);
+                    System.out.println("Dijkstra: " + dijkstra.getRunTime() + "ms");
+                    System.out.println("JPS: " + jps.getRunTime() + "ms");
+                    System.out.println("-----------");
                     correct++;
                 } else {
                     System.out.println("Missmatch! Test " + i);
@@ -78,13 +78,11 @@ public class BenchmarkScenario {
                     System.out.println("JPS: " + j + " | " + jps.getRunTime() + "ms");
                     System.out.println("Optimal: " + optimal);
                     System.out.println("-------------------");
-                    jpsPathDiff += (j - optimal);
                 }
                 
                 dijkstraTotalTime += dijkstra.getRunTime();
                 jpsTotalTime += jps.getRunTime();
                 optPathTotal += optimal;
-                jpsMaxDiff = Math.max(jpsMaxDiff, (j - optimal));
                 
                 i++;
             }
@@ -93,12 +91,9 @@ public class BenchmarkScenario {
             double dijkstraAvgTime = dijkstraTotalTime / i;
             double jpsAvgTime = jpsTotalTime / i;
             double avgPath = optPathTotal / i;
-            double avgJPSDiff = jpsPathDiff / (i - correct);
             
             System.out.println(correct + "/" + (i) + " tests succesful");
             System.out.println("Average path length (optimal): " + avgPath);
-            System.out.println("Average path diff for JPS: " + avgJPSDiff);
-            System.out.println("Maximum path diff for JPS: " + jpsMaxDiff);
             System.out.println("Average runtime for Dijkstra: " + dijkstraAvgTime + "ms");
             System.out.println("Average runtime for JPS: " + jpsAvgTime + "ms");
             

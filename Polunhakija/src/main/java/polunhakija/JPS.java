@@ -15,6 +15,7 @@ public class JPS {
     private Node goal;
     private double runTime;
     private boolean earlyExit;
+    private double d2 = Math.sqrt(2);
     
     
     public double getRunTime() {
@@ -43,13 +44,15 @@ public class JPS {
      */
     private Node scanPathHor(Node node, int xDir) {
         
+        //avoid out of bounds
         if (node.x == map.length - 1 || node.x == 0) {
             return null;
         }
         
         Node next = map[node.x + xDir][node.y];
         
-        if (node.wall || node.visited) {
+        //check if node is wall of if it has been reached optimally earlier
+        if (node.wall || node.distance < map[node.x - xDir][node.y].distance + 1) {
             return null;
         }
     
@@ -59,16 +62,7 @@ public class JPS {
         if (node.x == goal.x && node.y == goal.y) {
             return node;
         }
-        
-        //wall or visited node straight ahead, so this row can be ignored
-        if (next.wall || next.visited) {
-            return null;
-        }
-        
-        // goal straight ahead, node is jump point
-        if (next.x == goal.x && next.y == goal.y) {
-            return node;
-        }
+       
         
         //to avoid cutting corners, if a node has wall diagonally behind it,
         //but is open from sides it is considered a jump node
@@ -101,7 +95,7 @@ public class JPS {
             return null;
         }
              
-        if (node.wall || node.visited) {
+        if (node.wall || node.distance < map[node.x][node.y - yDir].distance + 1) {
             return null;
         }
         
@@ -112,16 +106,7 @@ public class JPS {
         
         if (node.x == goal.x && node.y == goal.y) {
             return node;
-        }
-
-        if (next.wall || next.visited) {
-            return null;
-        }
-        
-        
-        if (next.x == goal.x && next.y == goal.y) {
-            return node;
-        }
+        }        
         
         
         //to avoid cutting corners, if a node has wall diagonally behind it,
@@ -186,9 +171,10 @@ public class JPS {
     public void moveDiag(Node node, int xDir, int yDir) {
         Node target = map[node.x + xDir][node.y + yDir];
         
-        if (!target.wall && !target.visited && !checkCorners(node, xDir, yDir)) {
+        if (!target.wall && !checkCorners(node, xDir, yDir)
+                && target.distance > node.distance + d2) {
             target.parent = node;
-            target.distance = node.distance + Math.sqrt(2);
+            target.distance = node.distance + d2;
             examineNode(target, xDir, yDir);
         }
     }
@@ -248,7 +234,7 @@ public class JPS {
                 node.path = true;
             }
             
-            if (eucDis(node, parent) > Math.sqrt(2)) {
+            if (eucDis(node, parent) > d2) {
                 if (node.x - parent.x == 0) {
                     if (node.y - parent.y < 0) {
                         node = map[node.x][node.y + 1];
