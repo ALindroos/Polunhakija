@@ -23,3 +23,4 @@ Syötteenä käytetään kaksiulotteista ascii-merkeistä tehtyä ruudukkoa, jon
 * [https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
 * [https://courses.helsinki.fi/en/tkt20001/119558719](https://courses.helsinki.fi/en/tkt20001/119558719)
 * [https://harablog.wordpress.com/2011/09/07/jump-point-search/](https://harablog.wordpress.com/2011/09/07/jump-point-search/)
+* [http://users.cecs.anu.edu.au/%7Edharabor/data/papers/harabor-grastien-aaai11.pdf](http://users.cecs.anu.edu.au/%7Edharabor/data/papers/harabor-grastien-aaai11.pdf)

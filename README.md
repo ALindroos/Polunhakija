@@ -17,3 +17,4 @@ Toteutettu ja vertailtu polunhakualgoritmeja Dijkstra & Jump point Search
 * [Viikko 5](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko5.md)
 * [Viikko 6](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko6.md)
 * [Viikko 7](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikko7.md)
+* [Viikko 8](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/viikkoLoppu.md)

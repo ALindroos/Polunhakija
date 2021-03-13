@@ -40,7 +40,7 @@ Uuden alkio lisäämisen aikavaatimus on sama kuin muidenkin 0(log n). Aloitetaa
 
 ## Dijkstra
 Alustustoimeksi kekoon lisätään ensimmäinen alkio, lähtösolmu. Tämän kuten kaikkien muidenkin keko operaatioiden aikavaatimus on 0(log n), kuten yllätodettu.
-Toistolauseessa poistetaan keon ensimmäinen solmu O(log |V|), tarkistetaan se ja jos se ei ole maalisolmu lisätään kaikki solmun sopivat naapurit kekoon eli 0(|E| log |V|), missä |V| on solmut ja |E| solmun kaaret (naapurit).
+Toistolauseessa poistetaan keon ensimmäinen solmu O(log |V|), tarkistetaan se ja jos se ei ole maalisolmu lisätään kaikki solmun sopivat naapurit kekoon eli 0(|E| log |V|), missä |E| solmun kaaret (naapurit).
 Pahimmassa tapauksessa, eli jos kaikki solmut joudutaan käymään läpi, saadaan aikavaatimukseksi 0((|E|+|V|) log |V|).
 
 Tilavaatimus on 0(|V|), mikä on suurin mahdollinen määrä toistoja algoritmin läpikäymiseksi.
@@ -50,15 +50,11 @@ Algoritmi ei myöskään leikkaa kulmia, kuten karttatesteissä oletettiin.
 
 ## JPS
 Alustustoimena sama, lähtösolmu lisätään kekoon.
-Toistolauseessa keosta poistetaan ensimmäinen solmu O(log |V|) ja tämä tutkitaan. Tutkiessa ensin skannataan verkosta rivi ja sarake jossa solmu on O(|V|) jonka jälkeen edetään rekursiivesti tutkimaan solmun diagonaaliset naapurit (|V|). Jos matkalla löydetään hyppypiste se lisätään kekoon 0(log |V|). Kun rekursiivinen solmun tutkimus on päättynyt siirrytään seuraavaan keon alkioon. Eli aikavaatimus on 0( (|V|^2) log|V|).
+Toistolauseessa keosta poistetaan ensimmäinen solmu O(log |V|) ja tämä tutkitaan. Tutkiessa ensin skannataan verkosta rivi ja sarake jossa solmu on O(|V|) jonka jälkeen edetään rekursiivesti tutkimaan solmun diagonaaliset naapurit (|V|). Jos matkalla löydetään hyppypiste se lisätään kekoon 0(log |V|). Kun rekursiivinen solmun tutkimus on päättynyt siirrytään seuraavaan keon alkioon. Eli aikavaatimus on 0(|V| log|V|).
 
-Tilavaatimus on rekursion takia siis (0|V|^2).
+Tilavaatimus myös (0|V|).
 
-Kuten Dijkstra, JPS etenee 8 suuntaa, hinnat 1 suoraan, sqrt(2) vinoon. JPS ei myöskään leikkaa kulmia.
-
-Toteutettu JPS ei toimi kuitenkaan tällä hetkellä täysin oikein, kuten testeissä huomattiin. Koska algoritmi kuitenkin suorituu annetuista kartoista ja löytää lyhyimmän reitin usein, luulen että ongelma johtuu luultavasti pienistä bugeissa hauen laajentuessa rekursiivisesti. Yksi mahdollinen epäilty ongelmakohta on kun uutta hyppypistettä tutkiessa vierussolmuja ja ei ehkä karsita tarpeeksi. En kuitenkaan ehtinyt korjata ja tutkia tätä vielä tarpeeksi.
-Myös algoritmia tehdessä tulin aluksi väärin ymmärtäneeksi että JPS ei aina toimi optimaalisesti, kun kyseessä oikeasti tarkoitettiin että heurestiiksta riippuen JPS voi olla toimimatta aina optimaalisesti, mutta muuten nopeampi.
-Näin siis testauksessa en aluksi kummemmin ihmetellyt että JPS ei aina toimi optimaalisesti.
+Kuten Dijkstra, JPS etenee 8-suuntaa, hinnat 1 suoraan, sqrt(2) vinoon. JPS ei myöskään leikkaa kulmia, mikä tarkoittaa että "normaalista" hyppypisteet mennään askel ohi, tarkaillaan takana vinosti olevia läpikulkemattomia solmuja
 
 Tarkempia testituloksia löytyy [testausdokumenttista.](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/testaus.md)
 
