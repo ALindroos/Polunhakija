@@ -13,10 +13,19 @@ public class Dijkstra {
     private double pathL;
     private Node[][] map;
     private double runTime;
+    private int examNodes;
      
 
     public double getRunTime() {
         return runTime;
+    }
+    
+    /**
+     * return the amount of nodes examined (added to heap) during search
+     * @return 
+     */
+    public int getExamNodes() {
+        return examNodes;
     }
     
     /**
@@ -46,18 +55,17 @@ public class Dijkstra {
     private Node checkNeighbour(Node current, int xDir, int yDir) {
         Node next = map[current.x + xDir][current.y + yDir];
         
-        if (!next.visited && !next.wall &&
-                next.distance > current.distance + 1 &&
+        //adjust distance to next node based on if its diagonal or not
+        double stepDistance = 1;
+        if (xDir != 0 && yDir != 0) {
+            stepDistance = Math.sqrt(2);
+        }
+        
+        if (!next.wall && next.distance > current.distance + stepDistance &&
                 !checkCorners(current, xDir, yDir)) {
             
-            //check if diagonal and adjust distance
-            if (xDir == 0 || yDir == 0) {
-                next.distance = current.distance + 1;
-            } else {
-                next.distance = current.distance + Math.sqrt(2);;
-            }
-            next.priority = next.distance;
-            
+            next.distance = current.distance + stepDistance;
+            next.priority = next.distance;            
             next.parent = current;
             return next;
         }
@@ -95,6 +103,7 @@ public class Dijkstra {
         int width_x = map.length;
         int height_y = map[0].length;
         BinaryHeap openNodes = new BinaryHeap(width_x * height_y);
+        examNodes = 0;
        
         
         start.distance = 0;
@@ -103,7 +112,8 @@ public class Dijkstra {
         while (!openNodes.isEmpty()) {
             Node current = openNodes.remove();            
             pathL = current.distance;
-            current.visited = true;             
+            current.visited = true;
+            examNodes++;
             
             //early exit
             if (current.x == goal.x && current.y == goal.y) {

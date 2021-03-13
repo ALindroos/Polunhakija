@@ -23,7 +23,6 @@ public class BenchmarkScenario {
         Dijkstra dijkstra = new Dijkstra();
         JPS jps = new JPS();
         MapLoader maploader = new MapLoader();
-        Node[][] map = maploader.loadMap(mapname);
         
         try (Scanner scanner = new Scanner(Paths.get(mapname + ".scen"))) {
 
@@ -33,6 +32,8 @@ public class BenchmarkScenario {
             double jpsTotalTime = 0;
             double optPathTotal = 0;
             double threshold = 0.01;
+            double examNodesD = 0;
+            double examNodesJ = 0;
             
             while (scanner.hasNextLine()) {
                 
@@ -83,6 +84,8 @@ public class BenchmarkScenario {
                 dijkstraTotalTime += dijkstra.getRunTime();
                 jpsTotalTime += jps.getRunTime();
                 optPathTotal += optimal;
+                examNodesD += dijkstra.getExamNodes();
+                examNodesJ += jps.getExamNodes();
                 
                 i++;
             }
@@ -91,19 +94,18 @@ public class BenchmarkScenario {
             double dijkstraAvgTime = dijkstraTotalTime / i;
             double jpsAvgTime = jpsTotalTime / i;
             double avgPath = optPathTotal / i;
+            double avgNodesD = examNodesD / i;
+            double avgNodesJ = examNodesJ / i;
             
             System.out.println(correct + "/" + (i) + " tests succesful");
             System.out.println("Average path length (optimal): " + avgPath);
             System.out.println("Average runtime for Dijkstra: " + dijkstraAvgTime + "ms");
+            System.out.println("Average nodes examined (added to heap) for Dijkstra: " + avgNodesD);
             System.out.println("Average runtime for JPS: " + jpsAvgTime + "ms");
-            
+            System.out.println("Average nodes examined (added to heap) for JPS: " + avgNodesJ);
             
         } catch (Exception e) {
             System.out.println(e); 
         }
-        
-        
-        
-    }
-    
+    }  
 }

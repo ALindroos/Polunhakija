@@ -1,10 +1,10 @@
 # Testausdokumentti
 
 ## Testien muoto
-Testaus tulee tapahtumaan käyttäen Moving AI Labs:in karttoihin liittyviä scenarioita, joista löytyy useita valmiita reittejä optimaalipituuksilla.
+Testaus tapahtuu käyttäen Moving AI Labs:in karttoihin liittyviä scenarioita, joista löytyy useita valmiita reittejä optimaalipituuksilla.
 Kumpaakin algoritmia (Dijkstra & JPS) ajetaan näillä reiteillä ja verrataan algoritmien löytämien reittien pituuksia (parhaassa tapauksessa samat), sekä hakuihin kuluvaa aikaa.
 Lisäksi apuna on visualisointi, jolla voi havainnolistaa hakujen toimintaa, esimerkiksi: tutkitut solmut, hyppypisteet, löydetty reitti.
-Testien pohjana käytetään Baldur's Gate 2 karttoja, jotka ovat kooltaan 512*512 ruutua, mikä muuntuu suoraa verkon solmujen lukumääräksi.
+Testien pohjana käytetään Baldur's Gate 2-pelin karttoja, jotka ovat kooltaan 512*512 ruutua, mikä muuntuu suoraa verkon solmujen lukumääräksi.
 
 
 ## Tuloksia ja vertailua
@@ -13,43 +13,24 @@ Ohessa taulukko tuloksista muutamalla esimerkkikartalla
 
  Map                          | AR0011SR          | AR0205SR          | AR0018SR          | AR0406SR          | AR0400SR  
 -----                         | ------            | ----              | -----             | -------           | ------
+No. of tests                  | 2180              | 1900              | 1490              | 2240              | 2890
 Average optimal path length   | 435.93            | 379.95            | 297.96            | 447.96            | 577.95
-Dijkstra avg. runtime         | 22.54ms           | 8.93ms            | 26ms              | 6.16ms            | 18.97ms
-JPS found optimal path        | 1783/2180 (81.7%) | 1198/1900 (63.0%) | 1273/1490 (85.4%) | 1886/2240 (84.2%) | 2521/2890 (87.2%)
-JPS avg. runtime              | 1.49ms            | 0.89ms            | 1.25ms            | 0.79ms            | 1.69ms
-JPS avg. diff in path length (all)  | 5.32              | 8.72              | 0.94              | 1.20              | 3.43
-JPS avg. diff in path length (non-optimal cases) | 29.19 | 23.61 | 6.46 | 7.60 | 26.83
-JPS max diff in path lenght   | 246.75            | 101.45            | 29.82             | 99.92             | 315.71
+Dijkstra avg. runtime         | 10.56ms           | 5.92ms            | 8.41ms            | 5.09ms            | 9.01ms
+Dijkstra avg. nodes added to heap | 73 910.60     | 42 587.48         | 54 415.55         | 37 156.66         | 67 336.53
+JPS avg. runtime              | 1.73ms            | 0.94ms            | 1.50ms            | 0.95ms            | 1.67ms
+JPS avg. nodes added to heap  | 55.77             | 83.09             | 24.88             | 137.99            | 116.76
 
 
-Vaikka JPS:kin tulisi löytää lyhyin mahdollinen reitti kuten Dijkstralla, tehdyillä testeillä voidaan huomata että nykyinen JPS:n toteutus kuitenkin löytää lyhyimmän mahdollisen reitin keskimäärin noin 80% tapauksista.
-Tapauksissa joissa löydetty reitti ei ole optimaalinen, se on keskimäärin 20 askelta pidempi. Tosin ei optimaalisia tuloksia alkaa esiintyä erityisesti suurilla reitin pituuksilla, mikä voidaan huomata huonoimmista tapauksista joissa löydetty reitti voi olla huomattavasti pidempi. Tällaisia tilanteita voi olla mahdollista parantaa tarkemmalla heurestiikkalla.
-Kuitenkin, jos kaikki tapaukset otetaan huomioon, on keskimäärin löydetty reitti vain ~4 askelta pidempi.
+Vaikka JPS ja Dijkstra ovat molemmat algoritmeja jotka löytävät aina optimaalisen reitin pituuden, on suorituskyvyissä merkittäviä eroja. Testien perusteella JPS on noin keskimäärin 5-kertaa Dijkstraa nopeampi. 
 
-Tärkeämmin JPS on suoritusnopeudeltaan huomattavasti nopeampi kuin Dijkstran algoritmi. Kun Dijkstran algoritmin suoritusajat pyörivät +20ms alueilla toimii JPS varsin tasaisesti noin muutamassa millisekunnissa. Etenkin suurilla reitin pituuksilla ja kartoilla joilla on laajoja avaria alueita voivat suoritusajat olla helposti +30ms vs. ~3ms. JPS toimii siis tehokkaasti lähes kaikilla syötteillä huomattavasti nopeammin.
+Testeistä nähdään että Dijkstra tehokkuus on lähes suoraan verrannollinen tutkittujen, ja täten kekoon lisättyjen solmujen mukaan, kuten pitääkin. Jokainen solmun lisäys ja poisto keosta on oleellisin operaatio johon aikaa kuluu. Näin tutkittujen solmujen määrän kasvaessa myös suoritusaika kasvaa. Käytännössä tämä tarkoittaa että etenkin laajoilla kartoilla Dijkstra on hidas, kun taas kartoilla joissa on paljon kapeita tai suoria käytäviä Dijkstra toimii kohtuullisen tehokkaasti. Testeistä tämä näkyy esimerkiksi kartoilla AR0406SR (paljon yksisuuntaisia, kapeita käytäviä) vs AR0011SR (paljon avointa, useita mahdollisia tapoja kiertaa esteet).
+Tämä tarkoittaa myös että syötteen eli kartan koon kasvaessa Dijkstra hidastuu säännöllisesti, ja etenkin suurilla reitin pituuksilla joilloin huomattava määrä solmuja täytyy tutkia algoritmi hidastuu huomatttavasti.
 
-Käytetyistä kartoista voi havaita että JPS on verrattain erityisen tehokas kartoilla jolla on laajoja avoimia alueita. Toisin kuin Dijkstra, JPS:n ei tarvitse laajentuessaan lisätä kaikkia naapureitaan kekoon, vaan voi nopeasti hypätä alueen yli ja löytää kiinnostavia solmuja tutkittavaksi.
-Kartoilla joilla on paljon kapeita käytäviä eivät erot ole niin suuria, sillä näissä tapauksissa Dijkstra voi edetä kohtuullisen tehokkaasti. 
+JPS:n tehokkuutta ei voi taas verrata suoraa kekoon lisättyjen solmujen määrään, sillä vaikka vaikka JPS karsiikin näiden operaatoiden määrää huomattavasti ovat sen muut operaatio verrattain hinnakkaampia. Tässä asiassa JPS toimiikin jopa kuin päinvastoin, kartan ollessa avoimempi tarvitsee lisätä kekoon vähemmän solmuja. 
+Ja tämä onkin juuri JPS nopeuden ydin eli kartalla olevien laajojen tyhjien alueiden yli voidaan hypätä. 
+Testeistä huomataankin että avoimilla kartoilla JPS on jo lähes 10-kertaa nopeampi (AR0011SR), kun taas suljetummilla kartoilla ero on pienempi, joskin siltikin huomattavasti Dijkstraa nopeampi. 
 
-## Heurestiikka
-Heurestiikalla voi olla mahdollista vielä parantaa JPS:n tehokkuutta.
-Tällä hetkellä parhaimmaksi heurestiikaksi havaitsin euklidisen etäisyyden `sqrt((dx * dx) + (dy * dy))`
-Toinen testattu heurestiikka on vastaavassa jossa etäisyyttä maaliin on kompensoitu kohtisuorien liikkeiden kannalta:
-`D * (dx + dy) + (D2 - 2 * D) * min(dx, dy);`, missä D on suoranliikkeen hinta(=1) ja D2 vinon(=sqrt(2)).
-
-Erot näiden heurestiikkojen välillä eivät ole suuria, kuten alla olevasta voi huomata, mutta on vielä mahdollista että parempi heurestiikka on olemassa.
-
-### AR0011SR.map
- Heuristic  | Distance + Diagonal Distance to Goal | Distance + Diagonal Distance with compensation for straight moves    
------ | ------ | ----
-Average optimal path length | 435.93 | 435.93
-Dijkstra avg. runtime | 22.54ms | 22.36ms
-JPS found optimal path | 1783/2180 (81.7%) | 1758/2180 (80.6%)
-JPS avg. runtime | 1.49ms | 1.46ms
-JPS avg. diff in path length | 5.32 | 7.08
-JPS max diff in path lenght | 246.75 | 270.89
-
-
+JPS onkin siis kartasta riippumatta aina Dijkstraa nopeampi, mutta avoimilla kartoilla ja suurilla reitin pituuksilla ero korostuu entisestään.
 
 ## Yksikkötestien kattavuus
 ![testCoverage](https://github.com/ALindroos/Polunhakija/blob/main/dokumentaatio/testcoverage.png)

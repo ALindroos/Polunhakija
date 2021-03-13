@@ -16,10 +16,19 @@ public class JPS {
     private double runTime;
     private boolean earlyExit;
     private double d2 = Math.sqrt(2);
+    private int examNodes;
     
     
     public double getRunTime() {
         return runTime;
+    }
+    
+    /**
+     * return the amount of nodes examined (added to heap) during search
+     * @return 
+     */
+    public int getExamNodes() {
+        return examNodes;
     }
     
     
@@ -164,6 +173,7 @@ public class JPS {
     
     /**
      * check if next diagonal node can be moved to and examine it
+     * also prunes node that have been reached optimally earlier
      * @param node currently examined node
      * @param xDir direction in x-coordinates
      * @param yDir direction in y-coordinates
@@ -273,18 +283,24 @@ public class JPS {
         int width_x = map.length;
         int height_y = map[0].length;
         openNodes = new BinaryHeap(width_x * height_y);
-        
-        
+           
         start.distance = 0;
         map[start.x][start.y].distance = 0;
         this.goal = goal;
         openNodes.insert(start);     
         earlyExit = false;
+        examNodes = 0;
         
         while(!openNodes.isEmpty()) {
             Node current = openNodes.remove();
-            examineNode(current, 0, 0);
+            examNodes++;
+            
+            if (current.x == goal.x && current.y == goal.y) {
+                break;
+            }
+            examineNode(current, 0, 0); 
         }
+        
         double pathL = map[goal.x][goal.y].distance;
         
         Instant b = Instant.now();
